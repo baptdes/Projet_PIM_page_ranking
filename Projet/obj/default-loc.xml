@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file />
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_project>
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/src/main.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 6" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/src/test</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 3" >
+      <vfs_project>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_project>
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/src/test.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 3" >
+      <vfs_project>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_project>
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/src/test2.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 3" >
+      <vfs_project>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_project>
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/src/test2.ads</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/./</vfs_file>
+    </file_marker>
+    <file_marker column=" 26" line=" 6" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 10" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 26" line=" 6" >
+      <vfs_project />
+      <vfs_file>/home/alexandre/Ann#195;#169;e_1/PIM/Projet/default.gpr</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>
