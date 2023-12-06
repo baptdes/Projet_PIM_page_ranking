@@ -29,12 +29,26 @@ procedure Main is
       nom_fichier : String;
       -- Nombre de sites dans le graphe
       nombre_site : Integer;
+      --Les fichiers
       fichier : Ada.Text_IO.File_Type;
+      Fichier_pr : Ada.Text_IO.File_Type;
+      Fichier_prw : Ada.Text_IO.File_Type;
       --Variables utlisé pour la lecture du fichier
       a : Integer;
       b : Integer;
       -- Nombre de liaison d'un site
       s : Integer;
+      --Vecteurs poids
+      pik : T_matrice;
+      pik_prec : T_matrice;
+      -- Matrices
+      S : T_matrice;
+      I : T_matrice;
+      -- Indice de la ligne max
+      indice : T_matrice;
+      -- Nom fichiers
+      Nom_fichier_pr : Unbounded_String;
+      Nom_fichier_prw : Unbounded_String;
 
 begin
    --Initialiser le programme
@@ -47,7 +61,7 @@ begin
    Pleine := False;
 
    --Traiter la commande
-   i := 0;
+   i := 1;
    while (i<Argument_Count) loop
       begin
          case Argument(i) is
@@ -56,7 +70,7 @@ begin
             "-E" => epsilon := float'Value(Argument(i+1)); i := i + 2;
             "-P" => i := i + 1;
             "-C" => i := i + 1;
-            "-P" => Prefix := Argument(i+1); i := i + 2;
+            "-P" => Prefix := To_Unbounded_String(Argument(i+1)); i := i + 2;
          End Case;
          exception
             with others => raise arguments_invalides;
@@ -105,4 +119,53 @@ begin
       end if;
    end loop;
    Close (fichier);
+
+   -- Calculer G
+   I = Initialiser_matrice(nombre_site,nombre_site,1);
+   G = addition(multiplier_scalaire(H,alpha),multiplier_scalaire(I,(1-alpha)/nombre_site));
+
+   --Calculer le vecteur des poids
+   pik := Initialiser_matrice(nombre_site,1,1/nombre_site);
+   i := 1
+   loop
+      pik_prec := pik;
+      pik := Produit_matriciel(pik,G);
+   exit when (i<nombre_site)&&(norme(soustraction(pik,pik_prec)))
+   end loop;
+
+   -- Calculer le page rank
+   page_rank := Initialiser_matrice(nombre_site,1,0);
+   for i in 1..nombre_site loop
+      indice := Ligne_max(pik);
+      page_rank(i) := indice;
+      pik(indice) := 0;
+   end loop;
+   --Enregistrer le fichier .pr et .pwd
+
+   -- Créer les noms de fichiers
+   Nom_fichier_pr := To_Unbounded_String (Prefixe);
+   Nom_fichier_prw := Nom_fichier_pr;
+   Append (Nom_fichier_pr, ".pr");
+   Append (Nom_fichier_prw, ".prw");
+
+   -- Créer le fichier .pr
+	Create (Fichier_pr, Out_File, To_String (Nom_fichier_pr));
+   for i in 1..nombre_site loop
+      Put (Fichier_pr, String'Value(page_rank(i)));
+      New_Line (Fichier_pr);
+   end loop;
+	close (Fichier_pr);
+
+   --Créer le fichier .prw
+   Create (Fichier_prw, Out_File, To_String (Nom_fichier_prw));
+   Put (Fichier_prw, String'Value(nombre_site) & " ");
+   Put (Fichier_prw, String'Value(alpha) & " ");
+   Put (Fichier_prw, String'Value(K));
+   New_Line (Fichier_prw);
+   for i in 1..nombre_site loop
+      Put (Fichier_prw, String'Value(pik(i)));
+      New_Line (Fichier_prw);
+   end loop;
+	close (Fichier_prw);
+
 end Main;
