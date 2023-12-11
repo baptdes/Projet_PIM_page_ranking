@@ -1,3 +1,6 @@
+with Ada.Numerics.Elementary_Functions;
+use  Ada.Numerics.Elementary_Functions;
+
 package body matrice is
     
     procedure Initialiser(l:in Integer; c:in Integer; x:in Float; M:out T_mat) is
@@ -38,28 +41,45 @@ package body matrice is
             raise Ligne_Hors_Bornes;
         end if;                
     end Modifier_ligne;
+
+    function Ligne_Vide (M :in T_mat; l:in Integer) return Boolean is
+        res : Boolean;
+    begin 
+        res := True;
+        for j in 1..M.nombre_colonne loop
+            if abs(M.Mat(l,j)) > 0.00001 then
+                res := False;
+            else
+                Null;
+            end if;
+        end loop;
+        return res;
+    end Ligne_Vide;
     
     
-    function Ligne_max(M:in T_mat) is
-        maximum: Integer;
+    function Ligne_max(M:in T_mat) return integer is
+        maximum: Float;
+        indice : integer;
     begin
         if M.nombre_colonne = 1 then
-            maximum := 0;
+            maximum := 0.0;
+            indice := 0;
             for i in 1..M.nombre_ligne loop
                 if M.Mat(i,1) >= maximum then
                     maximum := M.Mat(i,1);
+                    indice := i;
                 else
-                    none;
+                    Null;
                 end if;
             end loop;
-            return maximum;
+            return indice;
         else
             raise Maximum_Indeterminable;
-        end if;                
+        end if;
     end Ligne_max;    
     
     
-    function Addition(M1:in T_mat; M2:in T_mat) is
+    function Addition(M1:in T_mat; M2:in T_mat) return T_mat is
         Somme: T_mat;
     begin
         
@@ -78,20 +98,20 @@ package body matrice is
     end Addition;
     
     
-    function Multiplication(M1:in T_mat; M2:in T_mat) is
+    function Multiplication(M1:in T_mat; M2:in T_mat) return T_mat is
         Produit: T_mat;
-        s: Integer;
+        s: Float;
     begin
         if M1.nombre_colonne = M2.nombre_ligne then
             Produit.nombre_ligne := M1.nombre_ligne;
             Produit.nombre_colonne := M2.nombre_colonne;
             for i in 1..Produit.nombre_ligne loop
                 for j in 1..Produit.nombre_colonne loop
-                    s := 0;
+                    s := 0.0;
                     for k in 1..M1.nombre_colonne loop
-                        s := s + M1(i,k)*M2(k,j);
+                        s := s + M1.Mat(i,k)*M2.Mat(k,j);
                     end loop;
-                    Produit(i,j) := s;
+                    Produit.Mat(i,j) := s;
                 end loop;
             end loop;
             return Produit;
@@ -101,7 +121,7 @@ package body matrice is
     end Multiplication;
     
     
-    function Transpose(M:in T_mat) is
+    function Transpose(M:in T_mat) return T_mat is
         T : T_mat;
     begin
         T.nombre_colonne := M.nombre_ligne;
@@ -111,19 +131,30 @@ package body matrice is
                 T.Mat(j,i) := M.Mat(i,j);
             end loop;
         end loop;
+        return T;
     end Transpose;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    function multiplier_scalaire (M:in T_mat;lambda:in Float) return T_mat is
+        T : T_mat;
+    begin
+        T.nombre_colonne := M.nombre_ligne;
+        T.nombre_ligne := M.nombre_colonne;
+        for i in 1..M.nombre_ligne loop
+            for j in 1..M.nombre_colonne loop
+                T.Mat(i,j) := lambda * M.mat(i,j);
+            end loop;
+        end loop;
+        return T;
+    end multiplier_scalaire;
+
+    function norme (M:in T_mat) return Float is
+        s : Float;
+    begin
+        s := 0.0;
+        for i in 1..M.nombre_ligne loop
+            s := s + M.Mat(i,1)*M.Mat(i,1);
+        end loop;
+        return sqrt(s);
+    end norme;
+
 end matrice;

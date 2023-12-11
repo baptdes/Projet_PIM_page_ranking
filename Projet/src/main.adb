@@ -5,8 +5,13 @@ with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
 -- Module pour lire les arguments de la commande
 with Ada.Command_line;		use Ada.Command_line;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Matrice;
 
 procedure Main is
+   -- Instanciation matrice
+   package Matrice_80 is new Matrice(Capacite => 80);
+   use Matrice_80;
+   
    --Exceptions
       arguments_invalides : exception;
       erreur_lecture_fichier : exception;
@@ -19,14 +24,12 @@ procedure Main is
       --Valeur de epsilon
       epsilon : Float;
       -- Préfixe des fichiers résultats
-      Prefix : String;
+      Prefix : Unbounded_String;
       -- Booleen pour choisir l’algorithme
       -- avec des matrices pleines (true) ou creuses (false)
       Pleine : Boolean;
       -- Indice pour parcourir des listes
       i : Integer;
-      -- Nom du fichier contenant le graphe
-      nom_fichier : String;
       -- Nombre de sites dans le graphe
       nombre_site : Integer;
       --Les fichiers
@@ -37,15 +40,18 @@ procedure Main is
       a : Integer;
       b : Integer;
       -- Nombre de liaison d'un site
-      s : Integer;
+      s : Float;
       --Vecteurs poids
-      pik : T_matrice;
-      pik_prec : T_matrice;
+      pik : T_mat;
+      pik_prec : T_mat;
+      --Vecteur pahe rank
+      page_rank : T_mat;
       -- Matrices
-      S : T_matrice;
-      I : T_matrice;
+      M_S : T_mat;
+      M_I : T_mat;
+      G : T_mat; -- Matrice de google
       -- Indice de la ligne max
-      indice : T_matrice;
+      indice : Integer;
       -- Nom fichiers
       Nom_fichier_pr : Unbounded_String;
       Nom_fichier_prw : Unbounded_String;
@@ -57,32 +63,44 @@ begin
    alpha := 0.85;
    k := 150;
    epsilon := 0.0;
-   Prefix := "output";
+   Prefix := To_Unbounded_String("output");
    Pleine := False;
 
    --Traiter la commande
    i := 1;
    while (i<Argument_Count) loop
       begin
-         case Argument(i) is
-            "-A" => alpha := float'Value(Argument(i+1)); i := i + 2;
-            "-K" => k := integer'Value(Argument(i+1)); i := i + 2;
-            "-E" => epsilon := float'Value(Argument(i+1)); i := i + 2;
-            "-P" => i := i + 1;
-            "-C" => i := i + 1;
-            "-P" => Prefix := To_Unbounded_String(Argument(i+1)); i := i + 2;
-         End Case;
+            if Argument(i) = "-A" then
+               alpha := float'Value(Argument(i+1));
+               i := i + 2;
+            elsif Argument(i) = "-K" then 
+               k := integer'Value(Argument(i+1));
+               i := i + 2;
+            elsif Argument(i) = "-E" then
+               epsilon := float'Value(Argument(i+1));
+               i := i + 2;
+            elsif Argument(i) = "-P" then
+               Pleine := True;
+               i := i + 1;
+            elsif Argument(i) = "-C" then
+               i := i + 1;
+            elsif Argument(i) = "-P" then
+               Prefix := To_Unbounded_String(Argument(i+1));
+               i := i + 2;
+            else
+               raise arguments_invalides;
+            end if;
          exception
-            with others => raise arguments_invalides;
-      end
-      nom_fichier = Argument(Argument_Count);
+            when others => raise arguments_invalides;
+      end;
+   end loop;
 
    --Déterminer H grâce au fichier graphe
-   open (fichier, In_File, nom_fichier);
+   open (fichier, In_File, Argument(Argument_Count));
    Get (fichier, nombre_site);
-   S := Initialiser_matrice(nombre_site,nombre_site,0);
+   Initialiser(nombre_site,nombre_site,0.0,M_S);
 
-   -- Calculer la matrice S
+   -- Calculer la matrice M_S
 	begin
       -- Tant qu'il y a encore des valeurs à lire
 		while not End_Of_file (fichier) loop
@@ -90,7 +108,7 @@ begin
 			Get (fichier, a);
          Get (fichier, b); 
          -- Mettre un 1 dans la matrice pour signifier le lien
-         S(a+1,b+1) := 1;
+         M_S.Mat(a+1,b+1) := 1.0;
 		end loop;
 	exception
 		when End_Error =>
@@ -102,68 +120,70 @@ begin
    -- Pour chaque ligne
    for i in 1..nombre_site loop
       -- Si la ligne est vide
-      if ligne_vide(S,i) then
+      if ligne_vide(M_S,i) then
          -- Remplir la ligne de 1/nombre de site
-         Modifier_ligne(S,i,1/nombre_site);
+         Modifier_ligne(M_S,i,1.0/Float (nombre_site));
       else
          -- Calculer le nombre de liaison du site (i-1)
-         s := 0
+         s := 0.0;
          for j in 1..nombre_site loop
-            s := s + S(i,j);
+            s := s + M_S.Mat(i,j);
          end loop;
 
          -- Diviser la ligne par le nombre de liaison
          for j in 1..nombre_site loop
-            S(i,j) := S(i,j) / s;
+            M_S.Mat(i,j) := M_S.Mat(i,j) / s;
          end loop;
       end if;
    end loop;
    Close (fichier);
 
    -- Calculer G
-   I = Initialiser_matrice(nombre_site,nombre_site,1);
-   G = addition(multiplier_scalaire(H,alpha),multiplier_scalaire(I,(1-alpha)/nombre_site));
+   Initialiser(nombre_site,nombre_site,1.0,M_I);
+   G := addition(multiplier_scalaire(M_S,alpha),multiplier_scalaire(M_I,(1.0-alpha)/Float (nombre_site)));
 
    --Calculer le vecteur des poids
-   pik := Initialiser_matrice(nombre_site,1,1/nombre_site);
-   i := 1
+   Initialiser(nombre_site,1,1.0/Float(nombre_site),pik);
+   i := 1;
    loop
       pik_prec := pik;
-      pik := Produit_matriciel(pik,G);
-   exit when (i<nombre_site)&&(norme(soustraction(pik,pik_prec)))
+      pik := Multiplication(pik,G);
+   exit when (i<nombre_site) and then (norme(Addition(pik,multiplier_scalaire(pik_prec,-1.0)))>epsilon);
    end loop;
 
    -- Calculer le page rank
-   page_rank := Initialiser_matrice(nombre_site,1,0);
+   Initialiser(nombre_site,1,0.0,page_rank);
    for i in 1..nombre_site loop
       indice := Ligne_max(pik);
-      page_rank(i) := indice;
-      pik(indice) := 0;
+      page_rank.Mat(i,1) := Float(indice);
+      pik.Mat(indice,1) := 0.0;
    end loop;
    --Enregistrer le fichier .pr et .pwd
 
    -- Créer les noms de fichiers
-   Nom_fichier_pr := To_Unbounded_String (Prefixe);
-   Nom_fichier_prw := Nom_fichier_pr;
+   Nom_fichier_pr := Prefix;
+   Nom_fichier_prw := Prefix;
    Append (Nom_fichier_pr, ".pr");
    Append (Nom_fichier_prw, ".prw");
 
    -- Créer le fichier .pr
 	Create (Fichier_pr, Out_File, To_String (Nom_fichier_pr));
    for i in 1..nombre_site loop
-      Put (Fichier_pr, String'Value(page_rank(i)));
+      Put (Fichier_pr, page_rank.Mat(i,1));
       New_Line (Fichier_pr);
    end loop;
 	close (Fichier_pr);
 
    --Créer le fichier .prw
    Create (Fichier_prw, Out_File, To_String (Nom_fichier_prw));
-   Put (Fichier_prw, String'Value(nombre_site) & " ");
-   Put (Fichier_prw, String'Value(alpha) & " ");
-   Put (Fichier_prw, String'Value(K));
+   Put (Fichier_prw, nombre_site);
+   Put (Fichier_prw, " ");
+   Put (Fichier_prw, alpha);
+   Put (Fichier_prw, " ");
+   Put (Fichier_prw, K);
    New_Line (Fichier_prw);
    for i in 1..nombre_site loop
-      Put (Fichier_prw, String'Value(pik(i)));
+      Put (Fichier_prw, pik.Mat(i,1));
       New_Line (Fichier_prw);
    end loop;
 	close (Fichier_prw);
