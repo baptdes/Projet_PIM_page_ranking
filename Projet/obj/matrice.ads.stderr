@@ -1,3 +1,1 @@
-matrice.ads:46:21: error: "Result" is undefined (more references follow)
-matrice.ads:46:43: error: invalid prefix in selected component "M"
-matrice.ads:47:49: error: invalid prefix in selected component "M"
+cannot generate code for file matrice.ads (package spec)

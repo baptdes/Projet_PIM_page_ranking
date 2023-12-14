@@ -1,9 +1,2 @@
-matrice.adb:1:14: error: missing body for "Ligne_Vide" declared at matrice.ads:21
-matrice.adb:1:14: error: missing body for "Ligne_max" declared at matrice.ads:33
-matrice.adb:1:14: error: missing body for "Addition" declared at matrice.ads:37
-matrice.adb:1:14: error: missing body for "Multiplication" declared at matrice.ads:41
-matrice.adb:1:14: error: missing body for "Transpose" declared at matrice.ads:45
-matrice.ads:46:21: error: invalid prefix in selected component "M"
-matrice.ads:46:42: error: invalid prefix in selected component "M"
-matrice.ads:47:25: error: invalid prefix in selected component "M"
-matrice.ads:47:48: error: invalid prefix in selected component "M"
+matrice.ads:49:48: error: missing ";"
+matrice.ads:54:45: error: missing ";"

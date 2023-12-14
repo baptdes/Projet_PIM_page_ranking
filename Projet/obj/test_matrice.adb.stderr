@@ -1,5 +1,3 @@
-test_matrice.adb:6:05: warning: in instantiation at matrice.ads:49 [-gnatw.t]
-test_matrice.adb:6:05: warning: postcondition does not mention function result [-gnatw.t]
 test_matrice.adb:11:21: error: invalid prefix in selected component "M"
 test_matrice.adb:12:25: error: invalid prefix in selected component "M"
 test_matrice.adb:13:21: error: invalid prefix in selected component "M"
@@ -12,6 +10,3 @@ test_matrice.adb:23:30: error: "Matrice_colonne" is undefined
 test_matrice.adb:24:29: error: expected type "Standard.Float"
 test_matrice.adb:24:29: error: found type universal integer
 test_matrice.adb:24:31: error: "Matrice_Carre" is undefined
-matrice.ads:49:21: error: "Result" is undefined (more references follow)
-matrice.ads:49:43: error: invalid prefix in selected component "M"
-matrice.ads:50:41: error: invalid prefix in selected component "M"

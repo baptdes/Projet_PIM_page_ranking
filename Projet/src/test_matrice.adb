@@ -3,7 +3,7 @@ with ada.Integer_Text_IO; use ada.Integer_Text_IO;
 with matrice;
 
 procedure test_matrice is
-    package Test_Matrice is new matrice(10);
+    package Test_Matrice is new Matrice(10);
     use Test_Matrice;
 
     procedure Afficher(M:in T_mat) is
