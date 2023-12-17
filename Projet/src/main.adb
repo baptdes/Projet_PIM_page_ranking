@@ -144,7 +144,7 @@ begin
 
    -- Calculer G (OK)
    Initialiser(nombre_site,nombre_site,1.0,M_I);
-   G := addition(multiplier_scalaire(M_S,alpha),multiplier_scalaire(M_I,(1.0-alpha)/Float (nombre_site)));
+   G := (alpha * M_S) + (((1.0-alpha)/Float (nombre_site)) * M_I);
 
    --Calculer le vecteur des poids
    Initialiser(nombre_site,1,1.0/Float(nombre_site),pik);
@@ -152,8 +152,8 @@ begin
    pik_T := Transpose(pik);
    loop
       pik_prec_T := pik_T;
-      pik_T := Multiplication(pik_T,G);
-   exit when (i<nombre_site) and then (norme(Addition(pik_T,multiplier_scalaire(pik_prec_T,-1.0)))>epsilon);
+      pik_T := pik_T * G;
+   exit when (i<nombre_site) and then (norme(pik_T + ((-1.0) * pik_prec_T))>epsilon);
    end loop;
    pik := Transpose(pik_T);
 

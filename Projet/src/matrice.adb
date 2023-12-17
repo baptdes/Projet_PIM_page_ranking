@@ -80,7 +80,7 @@ package body matrice is
     end Ligne_max;    
     
     
-    function Addition(M1:in T_mat; M2:in T_mat) return T_mat is
+    function "+" (M1,M2 : in T_mat) return T_mat is
         Somme: T_mat;
     begin
         
@@ -96,10 +96,10 @@ package body matrice is
         else
             raise Taille_Differente_Addition;
         end if;   
-    end Addition;
+    end "+";
     
     
-    function Multiplication(M1:in T_mat; M2:in T_mat) return T_mat is
+    function "*" (M1,M2:in T_mat) return T_mat is
         Produit: T_mat;
         s: Float;
     begin
@@ -119,7 +119,7 @@ package body matrice is
         else
             raise Taille_Incompatible_Multiplication;
         end if;                        
-    end Multiplication;
+    end "*";
     
     
     function Transpose(M:in T_mat) return T_mat is
@@ -135,7 +135,7 @@ package body matrice is
         return T;
     end Transpose;
     
-    function multiplier_scalaire (M:in T_mat;lambda:in Float) return T_mat is
+    function "*" (lambda:in Float ; M:in T_mat) return T_mat is
         T : T_mat;
     begin
         T.nombre_colonne := M.nombre_colonne;
@@ -146,7 +146,7 @@ package body matrice is
             end loop;
         end loop;
         return T;
-    end multiplier_scalaire;
+    end "*";
 
     function norme (M:in T_mat) return Float is
         s : Float;
