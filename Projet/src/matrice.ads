@@ -41,11 +41,11 @@ package Matrice is
     
     --Addition de deux matrices.
     --Renvoie l'exception Taille_Differente_Addition si les tailles ne correspondent pas
-    function Addition(M1:in T_mat; M2:in T_mat) return T_mat;
+    function "+" (M1, M2:in T_mat) return T_mat;
     
     --Multiplication de deux matrices (attention, on fait M1*M2 et non M2*M1)
     --Renvoie l'exception Taille_Incompatible_Multiplication si les dimenssions ne permettent pas la multiplication
-    function Multiplication(M1:in T_mat; M2:in T_mat) return T_mat;
+    function "*" (M1, M2 :in T_mat) return T_mat;
     
     
     --Renvoyer la transposé d'une matrice
@@ -55,10 +55,10 @@ package Matrice is
     
     --Renvoie le module d'une matrice colonne
     function norme (M:in T_mat) return Float;
-        --Pre => M.nombre_colonne = 1
+        --Pre => M.nombre_ligne = 1
     
     --Multiplication par un scalaire
-    function multiplier_scalaire (M:in T_mat;lambda:in Float) return T_mat;
+    function "*" (lambda:in Float ; M:in T_mat) return T_mat;
 
     procedure Afficher (M : in T_mat);
     
