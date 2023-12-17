@@ -1,0 +1,12 @@
+test_matrice.adb:11:21: error: invalid prefix in selected component "M"
+test_matrice.adb:12:25: error: invalid prefix in selected component "M"
+test_matrice.adb:13:21: error: invalid prefix in selected component "M"
+test_matrice.adb:22:28: error: expected type "Standard.Float"
+test_matrice.adb:22:28: error: found type universal integer
+test_matrice.adb:22:30: error: "Matrice_ligne" is undefined (more references follow)
+test_matrice.adb:23:28: error: expected type "Standard.Float"
+test_matrice.adb:23:28: error: found type universal integer
+test_matrice.adb:23:30: error: "Matrice_colonne" is undefined
+test_matrice.adb:24:29: error: expected type "Standard.Float"
+test_matrice.adb:24:29: error: found type universal integer
+test_matrice.adb:24:31: error: "Matrice_Carre" is undefined

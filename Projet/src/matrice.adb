@@ -1,5 +1,6 @@
-with Ada.Numerics.Elementary_Functions;
-use  Ada.Numerics.Elementary_Functions;
+with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
+with Ada.Text_IO;			use Ada.Text_IO;
+with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
 
 package body matrice is
     
@@ -11,7 +12,7 @@ package body matrice is
             end loop;
         end loop;
         M.nombre_colonne := c;
-        M.nombre_ligne := l;        
+        M.nombre_ligne := l;
     end Initialiser;
     
     
@@ -137,8 +138,8 @@ package body matrice is
     function multiplier_scalaire (M:in T_mat;lambda:in Float) return T_mat is
         T : T_mat;
     begin
-        T.nombre_colonne := M.nombre_ligne;
-        T.nombre_ligne := M.nombre_colonne;
+        T.nombre_colonne := M.nombre_colonne;
+        T.nombre_ligne := M.nombre_ligne;
         for i in 1..M.nombre_ligne loop
             for j in 1..M.nombre_colonne loop
                 T.Mat(i,j) := lambda * M.mat(i,j);
@@ -151,10 +152,22 @@ package body matrice is
         s : Float;
     begin
         s := 0.0;
-        for i in 1..M.nombre_ligne loop
-            s := s + M.Mat(i,1)*M.Mat(i,1);
+        for i in 1..M.nombre_colonne loop
+            s := s + M.Mat(1,i)*M.Mat(1,i);
         end loop;
         return sqrt(s);
     end norme;
+
+    procedure Afficher (M : in T_mat) is
+    begin
+        New_Line;
+        for i in 1..M.nombre_ligne loop
+            for j in 1..M.nombre_colonne loop
+                Put (M.Mat(i, j), 6, 2);
+                Put(" ");
+            end loop;
+            New_Line;
+        end loop;
+    end Afficher;
 
 end matrice;
