@@ -2,48 +2,39 @@ with Ada.IO_Exceptions;
 with Ada.Text_IO;			use Ada.Text_IO;
 with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
--- Module pour lire les arguments de la commande
-with Ada.Command_line;		use Ada.Command_line;
+with Ada.Command_line;		use Ada.Command_line; -- Module pour lire les arguments de la commande
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Matrice;
 
 procedure Main is
    -- Instanciation matrice
-   package Matrice_80 is new Matrice(Capacite => 80);
+   package Matrice_80 is new Matrice(Capacite => 15);
    use Matrice_80;
    
    --Exceptions
       arguments_invalides : exception;
       erreur_lecture_fichier : exception;
+      No_Argument_Error : exception;
    
    --Variables
-      --Valeur de alpha
-      alpha : Float;
-       -- Indice k du vecteur poids à calculer
-      k : Integer;
-      --Valeur de epsilon
-      epsilon : Float;
-      -- Préfixe des fichiers résultats
-      Prefix : Unbounded_String;
-      -- Booleen pour choisir l’algorithme
-      -- avec des matrices pleines (true) ou creuses (false)
-      Pleine : Boolean;
-      -- Indice pour parcourir des listes
-      i : Integer;
-      -- Nombre de sites dans le graphe
-      nombre_site : Integer;
-      --Les fichiers
-      fichier : Ada.Text_IO.File_Type;
-      Fichier_pr : Ada.Text_IO.File_Type;
-      Fichier_prw : Ada.Text_IO.File_Type;
-      --Variables utlisé pour la lecture du fichier
-      a : Integer;
+      alpha : Float; --Valeur de alpha
+      k : Integer;  -- Indice k du vecteur poids à calculer
+      epsilon : Float; --Valeur de epsilon
+      Prefix : Unbounded_String; -- Préfixe des fichiers résultats
+      Pleine : Boolean; -- Booleen pour choisir l’algorithme avec des matrices pleines (true) ou creuses (false)
+      i : Integer; -- Indice pour parcourir des listes
+      nombre_site : Integer; -- Nombre de sites dans le graphe
+      fichier : Ada.Text_IO.File_Type; --Fichier .net à lire
+      Fichier_pr : Ada.Text_IO.File_Type; --Fichier .pr à créer
+      Fichier_prw : Ada.Text_IO.File_Type; --Fichier .prw à créer
+      page_source : Integer; --Numéro site dé
       b : Integer;
       -- Nombre de liaison d'un site
       s : Float;
       --Vecteurs poids
       pik : T_mat;
-      pik_prec : T_mat;
+      pik_prec_T : T_mat;
+      pik_T : T_mat;
       --Vecteur pahe rank
       page_rank : T_mat;
       -- Matrices
@@ -66,10 +57,16 @@ begin
    Prefix := To_Unbounded_String("output");
    Pleine := False;
 
+   -- Vérifier si il a potentiellement le nom du fichier
+	if Argument_Count < 1 then
+		raise No_Argument_Error;
+	end if;
+
    --Traiter la commande
    i := 1;
    while (i<Argument_Count) loop
       begin
+            Put("ici");
             if Argument(i) = "-A" then
                alpha := float'Value(Argument(i+1));
                i := i + 2;
@@ -96,6 +93,7 @@ begin
    end loop;
 
    --Déterminer H grâce au fichier graphe
+   Put(Argument(Argument_Count));
    open (fichier, In_File, Argument(Argument_Count));
    Get (fichier, nombre_site);
    Initialiser(nombre_site,nombre_site,0.0,M_S);
@@ -105,10 +103,10 @@ begin
       -- Tant qu'il y a encore des valeurs à lire
 		while not End_Of_file (fichier) loop
          -- Lire les deux prochaines valeurs
-			Get (fichier, a);
+			Get (fichier, page_source);
          Get (fichier, b); 
          -- Mettre un 1 dans la matrice pour signifier le lien
-         M_S.Mat(a+1,b+1) := 1.0;
+         M_S.Mat(page_source+1,b+1) := 1.0;
 		end loop;
 	exception
 		when End_Error =>
@@ -141,16 +139,16 @@ begin
    -- Calculer G
    Initialiser(nombre_site,nombre_site,1.0,M_I);
    G := addition(multiplier_scalaire(M_S,alpha),multiplier_scalaire(M_I,(1.0-alpha)/Float (nombre_site)));
-
    --Calculer le vecteur des poids
    Initialiser(nombre_site,1,1.0/Float(nombre_site),pik);
    i := 1;
+   pik_T := Transpose(pik);
    loop
-      pik_prec := pik;
-      pik := Multiplication(pik,G);
-   exit when (i<nombre_site) and then (norme(Addition(pik,multiplier_scalaire(pik_prec,-1.0)))>epsilon);
+      pik_prec_T := pik_T;
+      pik_T := Transpose(Multiplication(pik_T,G));
+   exit when (i<nombre_site) and then (norme(Addition(pik_T,multiplier_scalaire(pik_prec_T,-1.0)))>epsilon);
    end loop;
-
+   pik := pik_T;
    -- Calculer le page rank
    Initialiser(nombre_site,1,0.0,page_rank);
    for i in 1..nombre_site loop
@@ -169,7 +167,7 @@ begin
    -- Créer le fichier .pr
 	Create (Fichier_pr, Out_File, To_String (Nom_fichier_pr));
    for i in 1..nombre_site loop
-      Put (Fichier_pr, page_rank.Mat(i,1));
+      Put (Fichier_pr, Integer(page_rank.Mat(i,1)),1);
       New_Line (Fichier_pr);
    end loop;
 	close (Fichier_pr);
@@ -183,7 +181,7 @@ begin
    Put (Fichier_prw, K);
    New_Line (Fichier_prw);
    for i in 1..nombre_site loop
-      Put (Fichier_prw, pik.Mat(i,1));
+      Put (Fichier_prw, Integer(pik.Mat(i,1)),1);
       New_Line (Fichier_prw);
    end loop;
 	close (Fichier_prw);
