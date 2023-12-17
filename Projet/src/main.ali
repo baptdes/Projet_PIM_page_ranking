@@ -16,7 +16,7 @@ RV NO_SECONDARY_STACK
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DEFAULT_INITIALIZATION
 
-U main%b		main.adb		00372295 NE OO SU
+U main%b		main.adb		e2c77b87 NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.command_line%s	a-comlin.adb		a-comlin.ali
 Z ada.exceptions%s	a-except.adb		a-except.ali
@@ -65,9 +65,9 @@ D a-unccon.ads		20230508121439 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20230508121439 edec285f interfaces%s
 D i-c.ads		20230508121439 2284bf7c interfaces.c%s
 D i-cstrea.ads		20230508121439 e53d8b8e interfaces.c_streams%s
-D main.adb		20231214110128 e740368b main%b
-D matrice.ads		20231211162239 7c8b421c matrice%s
-D matrice.adb		20231211162233 b8312717 matrice%b
+D main.adb		20231217185458 c9e027cf main%b
+D matrice.ads		20231217181115 b0db0a4a matrice%s
+D matrice.adb		20231217184429 9c6a705a matrice%b
 D system.ads		20230508121439 a2da961d system%s
 D s-atocou.ads		20230508121439 dc18efc3 system.atomic_counters%s
 D s-atoope.ads		20230508121439 c7637a25 system.atomic_operations%s
@@ -103,16 +103,16 @@ D s-valueu.ads		20230508121439 eb2f4477 system.value_u%s
 D s-wchcon.ads		20230508121439 d9032363 system.wch_con%s
 D unchconv.ads		20230508121439 ca2f9e18 unchecked_conversion%s
 G a e
-G c Z b b [main standard 10 11 none]
-G r i none [main standard 10 11 none] [matrice standard 3 9 none]
+G c Z b b [main standard 9 11 none]
+G r i none [main standard 9 11 none] [matrice standard 3 9 none]
 X 1 ada.ads
-16K9*Ada 20e8 27|1r6 2r6 2r45 3r6 3r37 4r6 4r37 6r6 6r37 7r6 7r33 37r17 38r20
-. 39r21
+16K9*Ada 20e8 27|1r6 2r6 2r45 3r6 3r37 4r6 4r37 5r6 5r37 6r6 6r33 27r17 28r20
+. 29r21
 X 4 a-comlin.ads
-36K13*Command_Line 144e21 27|6w10 6r41
-39V13*Argument_Count{natural} 27|72s12 78s13 107s17 108s37
-52V13*Argument{string} 27|81s16 82s37 84s19 85s35 87s19 88s39 90s19 93s19
-. 95s19 96s46 107s8 108s28
+36K13*Command_Line 144e21 27|5w10 5r41
+39V13*Argument_Count{natural} 27|55s19 94s12 102s17 103s37
+52V13*Argument{string} 27|58s22 59s43 61s25 62s41 64s25 65s45 67s25 70s25
+. 72s25 73s52 102s8 103s28
 X 7 a-flteio.ads
 20K13*Float_Text_IO[21|46] 27|3w10 3r41
 X 8 a-inteio.ads
@@ -120,88 +120,92 @@ X 8 a-inteio.ads
 X 9 a-ioexce.ads
 16K13*IO_Exceptions 28e22 27|1w10
 X 14 a-string.ads
-16K13*Strings 35e16 27|7r10 7r37
+16K13*Strings 35e16 27|6r10 6r37
 X 17 a-strunb.ads
-85K21*Unbounded 765e26 27|7w18 7r45
-90R9*Unbounded_String<6|43R9> 744e15 27|28r16 58r24 59r25
-107V13*To_Unbounded_String{90R9} 27|68s14 96s26
-120V13*To_String{string} 27|179s39 187s35
-139U14*Append 27|175s4 176s4
+85K21*Unbounded 765e26 27|6w18 6r45
+90R9*Unbounded_String<6|43R9> 744e15 27|23r16 48r24 49r25
+107V13*To_Unbounded_String{90R9} 27|73s32 90s14
+120V13*To_String{string} 27|178s39 186s35
+139U14*Append 27|174s4 175s4
 X 20 a-textio.ads
-58K13*Text_IO 727e16 27|2w10 2r49 37r21 38r24 39r25
-66P9*File_Type 27|37r29 38r32 39r33
-68n23*In_File{68E9} 27|108r19
-68n32*Out_File{68E9} 27|179r29 187r25
-98U14*Create 27|179s9 187s4
-113U14*Open 27|108s4
-128U14*Close 27|148s4 184s9 198s9
-257U14*New_Line 27|182s7 193s4 196s7
-311V13*End_Of_File{boolean} 27|115s27
-458U14*Put 27|189s4 191s4
-464U14*Put 27|80s13 107s4
-546X4*End_Error 27|123r22
+58K13*Text_IO 727e16 27|2w10 2r49 27r21 28r24 29r25
+66P9*File_Type 27|27r29 28r32 29r33
+68n23*In_File{68E9} 27|103r19
+68n32*Out_File{68E9} 27|178r29 186r25
+98U14*Create 27|178s9 186s4
+113U14*Open 27|103s4
+128U14*Close 27|143s4 183s9 198s9
+257U14*New_Line 27|181s7 192s4 196s7
+311V13*End_Of_File{boolean} 27|110s27
+458U14*Put 27|188s4 190s4
+464U14*Put 27|57s19 102s4
+546X4*End_Error 27|118r22
 X 21 a-tiflio.ads
-69U14*Put 27|190s4[7|20]
+69U14*Put 27|189s4[7|20] 195s7[7|20]
 X 22 a-tiinio.ads
-51U14*Get 27|109s4[8|18] 117s25[8|18] 118s10[8|18]
-68U14*Put 27|181s7[8|18] 188s4[8|18] 192s4[8|18] 195s7[8|18]
+51U14*Get 27|104s4[8|18] 112s25[8|18] 113s10[8|18]
+68U14*Put 27|180s7[8|18] 187s4[8|18] 191s4[8|18]
 X 27 main.adb
-10U11*Main 10b11 200l5 200t9
-12K12 Matrice_80[28|3] 13r8
-16X7 arguments_invalides 99r22 102r34
-17X7 erreur_lecture_fichier 126r16
-18X7 No_Argument_Error 73r23
-22f7 alpha{float} 65m4 82m16 152r42 152r78 190r22
-24i7 k{integer} 66m4 85m16 192r22
-26f7 epsilon{float} 67m4 88m16 160r100
-28r7 Prefix{17|90R9} 68m4 96m16 173r22 174r23
-31b7 Pleine{boolean} 69m4 91m16
-33i7 i{integer} 77m4 78r11 81r25 82r46 83m16 83r21 84r28 85r44 86m16 86r21
-. 87r28 88r48 89m16 89r21 90r28 92m16 92r21 93r28 94m16 94r21 95r28 96r55
-. 97m16 97r21 155m4 160r15
-35i7 nombre_site{integer} 109m18 110r16 110r28 130r16 134r42 138r22 143r22
-. 151r16 151r28 152r92 154r16 154r40 160r17 164r16 165r16 180r16 188r22 194r16
-37p7 fichier{20|66P9} 108m10 108r10 109r9 115r40 117r30 118r15 148m11 148r11
-38p7 Fichier_pr{20|66P9} 179m17 179r17 181r12 182r17 184m16 184r16
-39p7 Fichier_prw{20|66P9} 187m12 187r12 188r9 189r9 190r9 191r9 192r9 193r14
+9U11*Main 9b11 200l5 200t9
+11K12 Matrice_80[28|3] 12r8
+15X7 arguments_invalides 76r28 79r40
+16X7 erreur_lecture_fichier 121r16
+17X7 No_Argument_Error 95r23
+20f7 alpha{float} 59m22 87m4 147r42 147r78 189r22
+21i7 k{integer} 62m22 88m4 191r22
+22f7 epsilon{float} 65m22 89m4 156r100
+23r7 Prefix{17|90R9} 73m22 90m4 172r22 173r23
+24b7 Pleine{boolean} 68m22 91m4
+25i7 i{integer} 99m22 99r22 151m4 156r15
+26i7 nombre_site{integer} 104m18 105r16 105r28 125r16 129r42 133r22 138r22
+. 146r16 146r28 147r92 150r16 150r40 156r17 162r16 163r16 179r16 187r22 194r16
+27p7 fichier{20|66P9} 103m10 103r10 104r9 110r40 112r30 113r15 143m11 143r11
+28p7 Fichier_pr{20|66P9} 178m17 178r17 180r12 181r17 183m16 183r16
+29p7 Fichier_prw{20|66P9} 186m12 186r12 187r9 188r9 189r9 190r9 191r9 192r14
 . 195r12 196r17 198m16 198r16
-41i7 a{integer} 117m39 120r18
-42i7 b{integer} 118m24 120r22
-44f7 s{float} 137m10 139m13 139r18 144r44
-46r7 pik{28|13R10[12]} 154m53 156r23 162m4 166r27 168m7 195r33
-47r7 pik_prec_T{28|13R10[12]} 158m7 160r81
-48r7 pik_T{28|13R10[12]} 156m4 158r21 159m7 159r41 160r55 162r11
-50r7 page_rank{28|13R10[12]} 164m34 167m7 181r32
-52r7 M_S{28|13R10[12]} 110m44 120m10 132r21 134m25 134r25 139r22 144m13 144r29
-. 152r38
-53r7 M_I{28|13R10[12]} 151m44 152r69
-54r7 G{28|13R10[12]} 152m4 159r47
-56i7 indice{integer} 166m7 167r35 168r15
-58r7 Nom_fichier_pr{17|90R9} 173m4 175m12 175r12 179r50
-59r7 Nom_fichier_prw{17|90R9} 174m4 176m12 176r12 187r46
-130i8 i{integer} 132r25 134r29 139r30 144r21 144r37
-138i14 j{integer} 139r32
-143i14 j{integer} 144r23 144r39
-165i8 i{integer} 167r21
-180i8 i{integer} 181r46
-194i8 i{integer} 195r41
+30i7 page_source{integer} 112m39 115r18
+31i7 b{integer} 113m24 115r32
+33f7 s{float} 132m10 134m13 134r18 139r44
+35r7 pik{28|15R10[11]} 150m53 152r23 158m4 161r15 193r13 195r25
+36r7 pik_prec_T{28|15R10[11]} 154m7 156r81
+37r7 pik_T{28|15R10[11]} 152m4 154r21 155m7 155r31 156r55 158r21
+38r7 Tri_pik{28|15R10[11]} 161m4 164r27 166m7
+40r7 page_rank{28|15R10[11]} 162m34 165m7 180r32
+42r7 M_S{28|15R10[11]} 105m44 115m10 127r21 129m25 129r25 134r22 139m13 139r29
+. 147r38
+43r7 M_I{28|15R10[11]} 146m44 147r69
+44r7 G{28|15R10[11]} 147m4 155r37
+46i7 indice{integer} 164m7 165r35 166r19
+48r7 Nom_fichier_pr{17|90R9} 172m4 174m12 174r12 178r50
+49r7 Nom_fichier_prw{17|90R9} 173m4 175m12 175r12 186r46
+52U17 Traiter_arguments 52b17 52=35 82l11 82t28 99s4
+52i35 i{integer} 54m10 55r17 58r31 59r52 60m22 60r27 61r34 62r50 63m22 63r27
+. 64r34 65r54 66m22 66r27 67r34 69m22 69r27 70r34 71m22 71r27 72r34 73r61
+. 74m22 74r27
+125i8 i{integer} 127r25 129r29 134r30 139r21 139r37
+133i14 j{integer} 134r32
+138i14 j{integer} 139r23 139r39
+163i8 i{integer} 165r21
+179i8 i{integer} 180r46
+194i8 i{integer} 195r33
 X 28 matrice.ads
-2i5 Capacite{integer} 27|12r38
-3k9*matrice 27|8w6 12r30 28|60e12
-11A10 T_Matrice(float)<integer><integer>
-13R10 T_mat 27|46r13[12] 47r20[12] 48r15[12] 50r19[12] 52r13[12] 53r13[12]
-. 54r11[12]
-17a13 Mat{11A10[27|12]} 27|120m14[12] 139r26[12] 144m17[12] 144r33[12] 167m17[12]
-. 168m11[12] 181r42[12] 195r37[12]
-21U15 Initialiser 27|110s4[12] 151s4[12] 154s4[12] 164s4[12]
-25V14 Ligne_Vide{boolean} 27|132s10[12]
-33U15 Modifier_ligne 27|134s10[12]
-37V14 Ligne_max{integer} 27|166s17[12]
-41V14 Addition{13R10[27|12]} 27|152s9[12] 160s46[12]
-45V14 Multiplication{13R10[27|12]} 27|159s26[12]
-49V14 Transpose{13R10[27|12]} 27|156s13[12] 159s16[12]
-54V14 multiplier_scalaire{13R10[27|12]} 27|152s18[12] 152s49[12] 160s61[12]
-57V14 norme{float} 27|160s40[12]
+2i5 Capacite{integer} 27|11r38
+3k9*Matrice 27|7w6 11r30 28|65e12
+14A10 T_Matrice(float)<integer><integer>
+15R10 T_mat 27|35r13[11] 36r20[11] 37r15[11] 38r17[11] 40r19[11] 42r13[11]
+. 43r13[11] 44r11[11]
+19a13 Mat{14A10[27|11]} 27|115m14[11] 134r26[11] 139m17[11] 139r33[11] 165m17[11]
+. 166m15[11] 180r42[11] 195r29[11]
+24U15 Initialiser 27|105s4[11] 146s4[11] 150s4[11] 162s4[11]
+28V14 Ligne_Vide{boolean} 27|127s10[11]
+36U15 Modifier_ligne 27|129s10[11]
+40V14 Ligne_max{integer} 27|164s17[11]
+44V14 Addition{15R10[27|11]} 27|147s9[11] 156s46[11]
+48V14 Multiplication{15R10[27|11]} 27|155s16[11]
+52V14 Transpose{15R10[27|11]} 27|152s13[11] 158s11[11]
+57V14 norme{float} 27|156s40[11]
+61V14 multiplier_scalaire{15R10[27|11]} 27|147s18[11] 147s49[11] 156s61[11]
+63U15 Afficher 27|193s4[11]
 X 30 system.ads
 67M9*Address
 X 41 s-memory.ads

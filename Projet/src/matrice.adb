@@ -1,33 +1,25 @@
-package body Matrice is
+with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
+with Ada.Text_IO;			use Ada.Text_IO;
+with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
+
+package body matrice is
     
     procedure Initialiser(l:in Integer; c:in Integer; x:in Float; M:out T_mat) is
     begin
-        --Si la taille est en dehors de la capacité on léve une exception
-        if l > Capacite or c > Capacite then
-            raise Taille_Hors_Capacite;
-        else
-            for i in 1..l loop
-                for j in 1..c loop
-                    M.Mat(i,j) := x;
-                end loop;
+        for i in 1..l loop
+            for j in 1..c loop
+                M.Mat(i,j) := x;
             end loop;
-            M.nombre_colonne := c;
-            M.nombre_ligne := l;
-        end if;
+        end loop;
+        M.nombre_colonne := c;
+        M.nombre_ligne := l;
     end Initialiser;
     
     
-    function Ligne_Vide (M :in T_mat; l:in Integer) return boolean is
-    begin
-        for i in 1..M.nombre_colonne loop
-            if abs(M.Mat(l,i)) < 0.000001 then
-                Null;
-            else
-                return False;
-            end if;
-        end loop;
-        return True;
-    end Ligne_vide;
+    --function Ligne_Vide (M :in T_mat; l:in Integer) is
+    --begin
+    --    none;
+    --end Ligne_vide;
     
     
     procedure Enregistrer(M:in out T_mat; ligne:in Integer; colonne:in Integer; valeur:in float) is
@@ -50,27 +42,41 @@ package body Matrice is
             raise Ligne_Hors_Bornes;
         end if;                
     end Modifier_ligne;
+
+    function Ligne_Vide (M :in T_mat; l:in Integer) return Boolean is
+        res : Boolean;
+    begin 
+        res := True;
+        for j in 1..M.nombre_colonne loop
+            if abs(M.Mat(l,j)) > 0.00001 then
+                res := False;
+            else
+                Null;
+            end if;
+        end loop;
+        return res;
+    end Ligne_Vide;
     
     
-    function Ligne_max(M:in T_mat) return Integer is
+    function Ligne_max(M:in T_mat) return integer is
         maximum: Float;
-        ligne_max: Integer;
+        indice : integer;
     begin
         if M.nombre_colonne = 1 then
-            ligne_max := 0;
             maximum := 0.0;
+            indice := 0;
             for i in 1..M.nombre_ligne loop
                 if M.Mat(i,1) >= maximum then
                     maximum := M.Mat(i,1);
-                    ligne_max := i;
+                    indice := i;
                 else
                     Null;
                 end if;
             end loop;
-            return ligne_max;
+            return indice;
         else
             raise Maximum_Indeterminable;
-        end if;                
+        end if;
     end Ligne_max;    
     
     
@@ -129,23 +135,11 @@ package body Matrice is
         return T;
     end Transpose;
     
-    
-    function norme (M:in T_mat) return Float is
-        s : Float;
-    begin
-        s := 0.0;
-        for i in 1..M.nombre_ligne loop
-            s := s + M.Mat(i,1)*M.Mat(i,1);
-        end loop;
-        return sqrt(s);
-    end norme;
-
-    
     function multiplier_scalaire (M:in T_mat;lambda:in Float) return T_mat is
         T : T_mat;
     begin
-        T.nombre_colonne := M.nombre_ligne;
-        T.nombre_ligne := M.nombre_colonne;
+        T.nombre_colonne := M.nombre_colonne;
+        T.nombre_ligne := M.nombre_ligne;
         for i in 1..M.nombre_ligne loop
             for j in 1..M.nombre_colonne loop
                 T.Mat(i,j) := lambda * M.mat(i,j);
@@ -153,5 +147,27 @@ package body Matrice is
         end loop;
         return T;
     end multiplier_scalaire;
-    
-end Matrice;
+
+    function norme (M:in T_mat) return Float is
+        s : Float;
+    begin
+        s := 0.0;
+        for i in 1..M.nombre_colonne loop
+            s := s + M.Mat(1,i)*M.Mat(1,i);
+        end loop;
+        return sqrt(s);
+    end norme;
+
+    procedure Afficher (M : in T_mat) is
+    begin
+        New_Line;
+        for i in 1..M.nombre_ligne loop
+            for j in 1..M.nombre_colonne loop
+                Put (M.Mat(i, j), 6, 2);
+                Put(" ");
+            end loop;
+            New_Line;
+        end loop;
+    end Afficher;
+
+end matrice;

@@ -7,110 +7,154 @@ RN
 RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_EXCEPTIONS
 RV NO_FLOATING_POINT
+RV NO_IO
 
-U matrice%b		matrice.adb		c7525817 NE OO PK GE IL
+U matrice%b		matrice.adb		107ea926 NE OO PK GE IL
 W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
 W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
 
-U matrice%s		matrice.ads		7c8b421c BN EE NE OO PK GE IL
+U matrice%s		matrice.ads		b0db0a4a BN EE NE OO PK GE
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 
 D ada.ads		20230508121439 76789da1 ada%s
+D a-except.ads		20230508121439 2a7d8d70 ada.exceptions%s
+D a-flteio.ads		20230508121439 e18a47a0 ada.float_text_io%s
+D a-ioexce.ads		20230508121439 40018c65 ada.io_exceptions%s
 D a-numeri.ads		20230508121439 84bea7a3 ada.numerics%s
 D a-nuelfu.ads		20230508121439 03e83d1c ada.numerics.elementary_functions%s
 D a-ngelfu.ads		20230508121439 e6ec3af5 ada.numerics.generic_elementary_functions%s
+D a-stream.ads		20230508121439 119b8fb3 ada.streams%s
+D a-string.ads		20230508121439 90ac6797 ada.strings%s
+D a-sttebu.ads		20230508121439 18209c64 ada.strings.text_buffers%s
+D a-stuten.ads		20230508121439 33c54060 ada.strings.utf_encoding%s
+D a-tags.ads		20230508121439 9eaa38c6 ada.tags%s
+D a-textio.ads		20230508121439 deada98a ada.text_io%s
+D a-tiflio.ads		20230508121439 fcca4daa ada.text_io.float_io%s
 D a-unccon.ads		20230508121439 0e9b276f ada.unchecked_conversion%s
-D matrice.ads		20231211162239 7c8b421c matrice%s
-D matrice.adb		20231211162233 b8312717 matrice%b
+D interfac.ads		20230508121439 edec285f interfaces%s
+D i-cstrea.ads		20230508121439 e53d8b8e interfaces.c_streams%s
+D matrice.ads		20231217181115 b0db0a4a matrice%s
+D matrice.adb		20231217184429 9c6a705a matrice%b
 D system.ads		20230508121439 a2da961d system%s
+D s-crtl.ads		20230508121439 8a0692f8 system.crtl%s
 D s-exctab.ads		20230508121439 91bef6ef system.exception_table%s
+D s-ficobl.ads		20230508121439 dc5161d4 system.file_control_block%s
+D s-parame.ads		20230508121439 d494a4a6 system.parameters%s
+D s-putima.ads		20230508121439 4e095881 system.put_images%s
+D s-secsta.ads		20230508121439 62cd9202 system.secondary_stack%s
+D s-soflin.ads		20230508121439 df77073e system.soft_links%s
+D s-stache.ads		20230508121439 0b81c1fe system.stack_checking%s
 D s-stalib.ads		20230508121439 1c9580f6 system.standard_library%s
+D s-stoele.ads		20230508121439 6d8e1ff4 system.storage_elements%s
+D s-stoele.adb		20230508121439 8f5a9db6 system.storage_elements%b
+D s-traent.ads		20230508121439 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20230508121439 fa2a7f59 system.unsigned_types%s
+D s-wchcon.ads		20230508121439 d9032363 system.wch_con%s
+D unchconv.ads		20230508121439 ca2f9e18 unchecked_conversion%s
 G a e
 G c Z s b [matrice standard 3 9 none]
 X 1 ada.ads
-16K9*Ada 20e8 7|1r6 2r6
-X 2 a-numeri.ads
-16K13*Numerics 35e17 7|1r10 2r10
-X 3 a-nuelfu.ads
-18K22*Elementary_Functions[4|39] 7|1w19 2r19
-X 4 a-ngelfu.ads
-52V13*Sqrt{float} 7|157s16[3|18]
-X 6 matrice.ads
-2i5 Capacite{integer} 11r32 11r44
-3k9*matrice 2z5 60l5 60e12 7|4b14 160l5 160t12
-5X5*Case_Hors_Bornes 7|29r19
-6X5*Ligne_Hors_Bornes 7|41r19
-7X5*Taille_Differente_Addition 7|96r19
-8X5*Taille_Incompatible_Multiplication 7|119r19
-9X5*Maximum_Indeterminable 7|77r19
-11A10*T_Matrice(float)<integer><integer> 17r18
-13R10*T_mat 18e19 21r73 25r32 29r36 33r39 37r29 41r29 41r42 41r56 45r35 45r48
-. 45r62 49r29 49r43 54r40 54r70 57r26 7|6r73 24r36 34r39 45r32 60r29 82r29
-. 82r42 82r56 83r16 101r35 101r48 101r62 102r18 124r29 124r43 125r13 137r40
-. 137r70 138r13 150r26
-15i13 nombre_ligne{integer} 50r38 51r61 7|14m11 26r36 36r36 67r27 86r57 86r75
-. 88m19 88r38 89r28 105r35 106m21 106r40 108r33 127r31 128m11 129r23 140r31
-. 141m11 142r23 154r23
-16i13 nombre_colonne{integer} 50r55 51r42 58r18 7|13m11 26r81 37r27 49r23
-. 64r14 86r15 86r35 87m19 87r40 90r32 105r15 107m21 107r42 109r37 111r36
-. 127m11 128r29 130r27 140m11 141r29 143r27
-17a13 Mat{11A10} 7|10m19 27m15 38m19 50r22 68r22 69r34 91m27 91r42 91r56
-. 112r37 112r49 114m29 131m19 131r33 144m19 144r42 155r24 155r35
-21U15*Initialiser 21>27 21>41 21>55 21<67 7|6b15 15l9 15t20
-21i27 l{integer} 7|6b27 8r21 14r27
-21i41 c{integer} 7|6b41 9r25 13r29
-21f55 x{float} 7|6b55 10r31
-21r67 M{13R10} 7|6b67 10m17 13m9 14m9
-25V14*Ligne_Vide{boolean} 25>26 25>39 7|45b14 57l9 57t19
-25r26 M{13R10} 7|45b26 49r21 50r20
-25i39 l{integer} 7|45b39 50r26
-29U15*Enregistrer 29=27 29>43 29>61 29>81 7|24b15 31l9 31t20
-29r27 M{13R10} 7|24b27 26r34 26r79 27m13
-29i43 ligne{integer} 7|24b43 26r12 26r26 27r19
-29i61 colonne{integer} 7|24b61 26r53 26r69 27r25
-29f81 valeur{float} 7|24b81 27r37
-33U15*Modifier_ligne 33=30 33>46 33>64 7|34b15 43l9 43t23
-33r30 M{13R10} 7|34b30 36r34 37r25 38m17
-33i46 ligne{integer} 7|34b46 36r12 36r26 38r23
-33f64 valeur{float} 7|34b64 38r35
-37V14*Ligne_max{integer} 37>24 7|60b14 79l9 79t18
-37r24 M{13R10} 7|60b24 64r12 67r25 68r20 69r32
-41V14*Addition{13R10} 41>23 41>36 7|82b14 98l9 98t17
-41r23 M1{13R10} 7|82b23 86r12 86r54 87r37 89r25 91r39
-41r36 M2{13R10} 7|82b36 86r32 86r72 88r35 90r29 91r53
-45V14*Multiplication{13R10} 45>29 45>42 7|101b14 121l9 121t23
-45r29 M1{13R10} 7|101b29 105r12 106r37 111r33 112r34
-45r42 M2{13R10} 7|101b42 105r32 107r39 112r46
-49V14*Transpose{13R10} 49>24 50r21 51r25 7|124b14 135l9 135t18
-49r24 M{13R10} 50r53 51r59 7|124b24 127r29 128r27 129r21 130r25 131r31
-54V14*multiplier_scalaire{13R10} 54>35 54>46 7|137b14 148l9 148t28
-54r35 M{13R10} 7|137b35 140r29 141r27 142r21 143r25 144r40
-54f46 lambda{float} 7|137b46 144r31
-57V14*norme{float} 57>21 7|150b14 158l9 158t14
-57r21 M{13R10} 58r16 7|150b21 154r21 155r22 155r33
-X 7 matrice.adb
-8i13 i{integer} 10r23
-9i17 j{integer} 10r25
-37i17 i{integer} 38r29
-46b9 res{boolean} 48m9 51m17 56r16
-49i13 j{integer} 50r28
-61f9 maximum{float} 65m13 68r34 69m21
-62i9 indice{integer} 66m13 70m21 75r20
-67i17 i{integer} 68r26 69r38 70r31
-83r9 Somme{6|13R10} 87m13 88m13 91m21 94r20
-89i17 i{integer} 91r31 91r46 91r60
-90i21 j{integer} 91r33 91r48 91r62
-102r9 Produit{6|13R10} 106m13 107m13 108r25 109r29 114m21 117r20
-103f9 s{float} 110m21 112m25 112r30 114r41
-108i17 i{integer} 112r41 114r33
-109i21 j{integer} 112r55 114r35
-111i25 k{integer} 112r43 112r53
-125r9 T{6|13R10} 127m9 128m9 131m17 134r16
-129i13 i{integer} 131r25 131r37
-130i17 j{integer} 131r23 131r39
-138r9 T{6|13R10} 140m9 141m9 144m17 147r16
-142i13 i{integer} 144r23 144r46
-143i17 j{integer} 144r25 144r48
-151f9 s{float} 153m9 155m13 155r18 157r21
-154i13 i{integer} 155r28 155r39
+16K9*Ada 20e8 19|1r6 1r46 2r6 2r45 3r6 3r37
+X 3 a-flteio.ads
+20K13*Float_Text_IO[14|46] 19|3w10 3r41
+X 5 a-numeri.ads
+16K13*Numerics 35e17 19|1r10 1r50
+X 6 a-nuelfu.ads
+18K22*Elementary_Functions[7|39] 19|1w19 1r59
+X 7 a-ngelfu.ads
+52V13*Sqrt{float} 19|158s16[6|18]
+X 13 a-textio.ads
+58K13*Text_IO 727e16 19|2w10 2r49
+263U14*New_Line 19|163s9 169s13
+464U14*Put 19|167s17
+X 14 a-tiflio.ads
+82U14*Put 19|166s17[3|20]
+X 18 matrice.ads
+2i5 Capacite{integer} 14r32 14r44
+3k9*Matrice 2z5 65l5 65e12 19|5b14 173l5 173t12
+5X5*Taille_Hors_Capacite
+6X5*Case_Hors_Bornes 19|30r19
+7X5*Ligne_Hors_Bornes 19|42r19
+8X5*Taille_Differente_Addition 19|97r19
+9X5*Taille_Incompatible_Multiplication 19|120r19
+10X5*Maximum_Indeterminable 19|78r19
+11X5*Module_Indeterminable
+14A10*T_Matrice(float)<integer><integer> 19r18
+15R10*T_mat 20e19 24r73 28r32 32r36 36r39 40r29 44r29 44r42 44r56 48r35 48r48
+. 48r62 52r29 52r43 57r26 61r40 61r70 63r32 19|7r73 25r36 35r39 46r32 61r29
+. 83r29 83r42 83r56 84r16 102r35 102r48 102r62 103r18 125r29 125r43 126r13
+. 138r40 138r70 139r13 151r26 161r32
+17i13 nombre_ligne{integer} 19|15m11 27r36 37r36 68r27 87r57 87r75 89m19
+. 89r38 90r28 106r35 107m21 107r40 109r33 128r31 129m11 130r23 142m11 142r29
+. 143r23 164r23
+18i13 nombre_colonne{integer} 19|14m11 27r81 38r27 50r23 65r14 87r15 87r35
+. 88m19 88r40 91r32 106r15 108m21 108r42 110r37 112r36 128m11 129r29 131r27
+. 141m11 141r31 144r27 155r23 165r27
+19a13 Mat{14A10} 19|11m19 28m15 39m19 51r22 69r22 70r34 92m27 92r42 92r56
+. 113r37 113r49 115m29 132m19 132r33 145m19 145r42 156r24 156r35 166r24
+24U15*Initialiser 24>27 24>41 24>55 24<67 19|7b15 16l9 16t20
+24i27 l{integer} 19|7b27 9r21 15r27
+24i41 c{integer} 19|7b41 10r25 14r29
+24f55 x{float} 19|7b55 11r31
+24r67 M{15R10} 19|7b67 11m17 14m9 15m9
+28V14*Ligne_Vide{boolean} 28>26 28>39 19|46b14 58l9 58t19
+28r26 M{15R10} 19|46b26 50r21 51r20
+28i39 l{integer} 19|46b39 51r26
+32U15*Enregistrer 32=27 32>43 32>61 32>81 19|25b15 32l9 32t20
+32r27 M{15R10} 19|25b27 27r34 27r79 28m13
+32i43 ligne{integer} 19|25b43 27r12 27r26 28r19
+32i61 colonne{integer} 19|25b61 27r53 27r69 28r25
+32f81 valeur{float} 19|25b81 28r37
+36U15*Modifier_ligne 36=30 36>46 36>64 19|35b15 44l9 44t23
+36r30 M{15R10} 19|35b30 37r34 38r25 39m17
+36i46 ligne{integer} 19|35b46 37r12 37r26 39r23
+36f64 valeur{float} 19|35b64 39r35
+40V14*Ligne_max{integer} 40>24 19|61b14 80l9 80t18
+40r24 M{15R10} 19|61b24 65r12 68r25 69r20 70r32
+44V14*Addition{15R10} 44>23 44>36 19|83b14 99l9 99t17
+44r23 M1{15R10} 19|83b23 87r12 87r54 88r37 90r25 92r39
+44r36 M2{15R10} 19|83b36 87r32 87r72 89r35 91r29 92r53
+48V14*Multiplication{15R10} 48>29 48>42 19|102b14 122l9 122t23
+48r29 M1{15R10} 19|102b29 106r12 107r37 112r33 113r34
+48r42 M2{15R10} 19|102b42 106r32 108r39 113r46
+52V14*Transpose{15R10} 52>24 19|125b14 136l9 136t18
+52r24 M{15R10} 19|125b24 128r29 129r27 130r21 131r25 132r31
+57V14*norme{float} 57>21 19|151b14 159l9 159t14
+57r21 M{15R10} 19|151b21 155r21 156r22 156r33
+61V14*multiplier_scalaire{15R10} 61>35 61>46 19|138b14 149l9 149t28
+61r35 M{15R10} 19|138b35 141r29 142r27 143r21 144r25 145r40
+61f46 lambda{float} 19|138b46 145r31
+63U15*Afficher 63>25 19|161b15 171l9 171t17
+63r25 M{15R10} 19|161b25 164r21 165r25 166r22
+X 19 matrice.adb
+9i13 i{integer} 11r23
+10i17 j{integer} 11r25
+38i17 i{integer} 39r29
+47b9 res{boolean} 49m9 52m17 57r16
+50i13 j{integer} 51r28
+62f9 maximum{float} 66m13 69r34 70m21
+63i9 indice{integer} 67m13 71m21 76r20
+68i17 i{integer} 69r26 70r38 71r31
+84r9 Somme{18|15R10} 88m13 89m13 92m21 95r20
+90i17 i{integer} 92r31 92r46 92r60
+91i21 j{integer} 92r33 92r48 92r62
+103r9 Produit{18|15R10} 107m13 108m13 109r25 110r29 115m21 118r20
+104f9 s{float} 111m21 113m25 113r30 115r41
+109i17 i{integer} 113r41 115r33
+110i21 j{integer} 113r55 115r35
+112i25 k{integer} 113r43 113r53
+126r9 T{18|15R10} 128m9 129m9 132m17 135r16
+130i13 i{integer} 132r25 132r37
+131i17 j{integer} 132r23 132r39
+139r9 T{18|15R10} 141m9 142m9 145m17 148r16
+143i13 i{integer} 145r23 145r46
+144i17 j{integer} 145r25 145r48
+152f9 s{float} 154m9 156m13 156r18 158r21
+155i13 i{integer} 156r30 156r41
+164i13 i{integer} 166r28
+165i17 j{integer} 166r31
 

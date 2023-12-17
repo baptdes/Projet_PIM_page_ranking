@@ -35,6 +35,7 @@ procedure Main is
       pik : T_mat;
       pik_prec_T : T_mat;
       pik_T : T_mat;
+      Tri_pik : T_mat;
       --Vecteur pahe rank
       page_rank : T_mat;
       -- Matrices
@@ -47,6 +48,38 @@ procedure Main is
       Nom_fichier_pr : Unbounded_String;
       Nom_fichier_prw : Unbounded_String;
 
+      -- Procedures
+      procedure Traiter_arguments(i : in out Integer) is
+      begin
+         i := 1;
+         while (i<Argument_Count) loop
+            begin
+                  Put("ici");
+                  if Argument(i) = "-A" then
+                     alpha := float'Value(Argument(i+1));
+                     i := i + 2;
+                  elsif Argument(i) = "-K" then 
+                     k := integer'Value(Argument(i+1));
+                     i := i + 2;
+                  elsif Argument(i) = "-E" then
+                     epsilon := float'Value(Argument(i+1));
+                     i := i + 2;
+                  elsif Argument(i) = "-P" then
+                     Pleine := True;
+                     i := i + 1;
+                  elsif Argument(i) = "-C" then
+                     i := i + 1;
+                  elsif Argument(i) = "-P" then
+                     Prefix := To_Unbounded_String(Argument(i+1));
+                     i := i + 2;
+                  else
+                     raise arguments_invalides;
+                  end if;
+               exception
+                  when others => raise arguments_invalides;
+            end;
+         end loop;
+      end Traiter_arguments;
 begin
    --Initialiser le programme
    
@@ -63,34 +96,7 @@ begin
 	end if;
 
    --Traiter la commande
-   i := 1;
-   while (i<Argument_Count) loop
-      begin
-            Put("ici");
-            if Argument(i) = "-A" then
-               alpha := float'Value(Argument(i+1));
-               i := i + 2;
-            elsif Argument(i) = "-K" then 
-               k := integer'Value(Argument(i+1));
-               i := i + 2;
-            elsif Argument(i) = "-E" then
-               epsilon := float'Value(Argument(i+1));
-               i := i + 2;
-            elsif Argument(i) = "-P" then
-               Pleine := True;
-               i := i + 1;
-            elsif Argument(i) = "-C" then
-               i := i + 1;
-            elsif Argument(i) = "-P" then
-               Prefix := To_Unbounded_String(Argument(i+1));
-               i := i + 2;
-            else
-               raise arguments_invalides;
-            end if;
-         exception
-            when others => raise arguments_invalides;
-      end;
-   end loop;
+   Traiter_arguments(i);
 
    --Déterminer H grâce au fichier graphe
    Put(Argument(Argument_Count));
@@ -136,26 +142,30 @@ begin
    end loop;
    Close (fichier);
 
-   -- Calculer G
+   -- Calculer G (OK)
    Initialiser(nombre_site,nombre_site,1.0,M_I);
    G := addition(multiplier_scalaire(M_S,alpha),multiplier_scalaire(M_I,(1.0-alpha)/Float (nombre_site)));
+
    --Calculer le vecteur des poids
    Initialiser(nombre_site,1,1.0/Float(nombre_site),pik);
    i := 1;
    pik_T := Transpose(pik);
    loop
       pik_prec_T := pik_T;
-      pik_T := Transpose(Multiplication(pik_T,G));
+      pik_T := Multiplication(pik_T,G);
    exit when (i<nombre_site) and then (norme(Addition(pik_T,multiplier_scalaire(pik_prec_T,-1.0)))>epsilon);
    end loop;
-   pik := pik_T;
+   pik := Transpose(pik_T);
+
    -- Calculer le page rank
+   Tri_pik := pik;
    Initialiser(nombre_site,1,0.0,page_rank);
    for i in 1..nombre_site loop
-      indice := Ligne_max(pik);
-      page_rank.Mat(i,1) := Float(indice);
-      pik.Mat(indice,1) := 0.0;
+      indice := Ligne_max(Tri_pik);
+      page_rank.Mat(i,1) := Float(indice) - 1.0;
+      Tri_pik.Mat(indice,1) := 0.0;
    end loop;
+
    --Enregistrer le fichier .pr et .pwd
 
    -- Créer les noms de fichiers
@@ -172,16 +182,17 @@ begin
    end loop;
 	close (Fichier_pr);
 
-   --Créer le fichier .prw
+    --Créer le fichier .prw
    Create (Fichier_prw, Out_File, To_String (Nom_fichier_prw));
-   Put (Fichier_prw, nombre_site);
+   Put (Fichier_prw, nombre_site, 1);
    Put (Fichier_prw, " ");
    Put (Fichier_prw, alpha);
    Put (Fichier_prw, " ");
-   Put (Fichier_prw, K);
+   Put (Fichier_prw, K, 1);
    New_Line (Fichier_prw);
+   Afficher(pik);
    for i in 1..nombre_site loop
-      Put (Fichier_prw, Integer(pik.Mat(i,1)),1);
+      Put (Fichier_prw, pik.Mat(i,1),1);
       New_Line (Fichier_prw);
    end loop;
 	close (Fichier_prw);
