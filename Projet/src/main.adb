@@ -8,7 +8,7 @@ with Matrice;
 
 procedure Main is
    -- Instanciation matrice
-   package Matrice_80 is new Matrice(Capacite => 15);
+   package Matrice_80 is new Matrice(Capacite => 300);
    use Matrice_80;
    
    --Exceptions
