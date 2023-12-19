@@ -10,7 +10,6 @@ package Matrice is
     Maximum_Indeterminable: exception;
     Module_Indeterminable: exception;
     
-    
     type T_Matrice is array(1..Capacite,1..Capacite) of float;
     type T_mat is
         record
@@ -19,10 +18,20 @@ package Matrice is
             Mat: T_Matrice;
         end record;
     
+    type T_Tab is array(1..Capacite) of float;
+    type T_vecteur is
+        record  
+            longueur : Integer;
+            tab : T_Tab;
+        end record;
+    
     --Initialiser une matrice de taille l * c remplie de x
     --On léve l'eception Taille_Hors_Capacite si la taille demandée dépasse les capacités
-    procedure Initialiser(l:in Integer; c:in Integer; x:in Float; M:out T_mat);
-    
+    procedure Initialiser_matrice(l:in Integer; c:in Integer; x:in float; M:out T_mat);
+
+    -- Initialise un vecteur à la taille l
+    procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur);
+
     --Est-ce que la ligne "ligne" dans la matrice M est vide ?
     --Renvoie l'exception Ligne_Hors_Bornes si ligne>nombre_ligne
     function Ligne_Vide (M :in T_mat; l:in Integer) return Boolean;
@@ -35,18 +44,21 @@ package Matrice is
     --Renvoie l'exception Ligne_Hors_Bornes si ligne > M.nombre_ligne    
     procedure Modifier_ligne(M:in out T_mat; ligne:in Integer; valeur:in float);
     
-    --Renvoyer la ligne qui contient le maximum d'une /!\ MATRICE COLONNE /!\
-    --Renvoie l'exception Maximum_Indeterminable si la matrice n'est pas une matrice colonne
-    function Ligne_max(M:in T_mat) return integer;
-    
     --Addition de deux matrices.
     --Renvoie l'exception Taille_Differente_Addition si les tailles ne correspondent pas
-    function "+" (M1, M2:in T_mat) return T_mat;
-    
+    function "+" (M1, M2: in T_mat) return T_mat;
+
+    --Addition de deux vecteurs.
+    --Renvoie l'exception Taille_Differente_Addition si les tailles ne correspondent pas
+    function "+" (V1, V2: in T_vecteur) return T_vecteur;
+
     --Multiplication de deux matrices (attention, on fait M1*M2 et non M2*M1)
     --Renvoie l'exception Taille_Incompatible_Multiplication si les dimenssions ne permettent pas la multiplication
-    function "*" (M1, M2 :in T_mat) return T_mat;
+    function "*" (M1, M2 : in T_mat) return T_mat;
     
+    --Multiplication d'un vecteur par une matrice (le vecteur M1 est mis en colone pour être multiplier comme une matrice par M)
+    --Renvoie l'exception Taille_Incompatible_Multiplication si les dimenssions ne permettent pas la multiplication
+    function "*" (V : in T_vecteur; M : in T_mat) return T_vecteur;
     
     --Renvoyer la transposé d'une matrice
     function Transpose(M:in T_mat) return T_mat;
@@ -54,12 +66,20 @@ package Matrice is
             --and Transpose'Result.nombre_colonne = M.nombre_ligne
     
     --Renvoie le module d'une matrice colonne
-    function norme (M:in T_mat) return Float;
-        --Pre => M.nombre_ligne = 1
+    function norme (V : T_vecteur) return float;
     
-    --Multiplication par un scalaire
-    function "*" (lambda:in Float ; M:in T_mat) return T_mat;
+    --Multiplication d'une matrice par un scalaire
+    function "*" (lambda:in float ; M:in T_mat) return T_mat;
+
+    --Multiplication d'un vecteur par un scalaire
+    function "*" (lambda:in float ; V:in T_vecteur) return T_vecteur;
+
+    procedure Quicksort(V: in out T_vecteur; bas, haut: Integer; Indices_tries : out T_vecteur);
 
     procedure Afficher (M : in T_mat);
+
+    procedure Afficher (V : in T_vecteur);
+
+    function Ligne_max(V:in T_vecteur) return integer;
     
 end Matrice;

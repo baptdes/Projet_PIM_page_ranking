@@ -4,7 +4,7 @@ with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
 
 package body matrice is
     
-    procedure Initialiser(l:in Integer; c:in Integer; x:in Float; M:out T_mat) is
+    procedure Initialiser_matrice(l:in Integer; c:in Integer; x:in float; M:out T_mat) is
     begin
         for i in 1..l loop
             for j in 1..c loop
@@ -13,14 +13,15 @@ package body matrice is
         end loop;
         M.nombre_colonne := c;
         M.nombre_ligne := l;
-    end Initialiser;
-    
-    
-    --function Ligne_Vide (M :in T_mat; l:in Integer) is
-    --begin
-    --    none;
-    --end Ligne_vide;
-    
+    end Initialiser_matrice;
+
+    procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur) is
+    begin
+        for i in 1..l loop
+            V.Tab(i) := x;
+        end loop;
+        V.longueur := l;
+    end Initialiser_vecteur;
     
     procedure Enregistrer(M:in out T_mat; ligne:in Integer; colonne:in Integer; valeur:in float) is
     begin
@@ -34,7 +35,7 @@ package body matrice is
     
     procedure Modifier_ligne(M:in out T_mat; ligne:in Integer; valeur:in float) is
     begin
-        if ligne > 0 and ligne <= M.nombre_ligne then
+        if ligne > 0 and ligne < M.nombre_ligne then
             for i in 1..M.nombre_colonne loop
                 M.Mat(ligne,i) := valeur;
             end loop;
@@ -57,29 +58,6 @@ package body matrice is
         return res;
     end Ligne_Vide;
     
-    
-    function Ligne_max(M:in T_mat) return integer is
-        maximum: Float;
-        indice : integer;
-    begin
-        if M.nombre_colonne = 1 then
-            maximum := 0.0;
-            indice := 0;
-            for i in 1..M.nombre_ligne loop
-                if M.Mat(i,1) >= maximum then
-                    maximum := M.Mat(i,1);
-                    indice := i;
-                else
-                    Null;
-                end if;
-            end loop;
-            return indice;
-        else
-            raise Maximum_Indeterminable;
-        end if;
-    end Ligne_max;    
-    
-    
     function "+" (M1,M2 : in T_mat) return T_mat is
         Somme: T_mat;
     begin
@@ -97,11 +75,25 @@ package body matrice is
             raise Taille_Differente_Addition;
         end if;   
     end "+";
+
+    function "+" (V1, V2: in T_vecteur) return T_vecteur is
+        Somme: T_vecteur;
+    begin
+        if V1.longueur = V2.longueur then
+            Somme.longueur := V1.longueur;
+            for i in 1..Somme.longueur loop
+                Somme.tab(i) := V1.tab(i) + V2.tab(i);
+            end loop;
+            return Somme;
+        else
+            raise Taille_Differente_Addition;
+        end if;   
+    end "+";
     
     
     function "*" (M1,M2:in T_mat) return T_mat is
         Produit: T_mat;
-        s: Float;
+        s: float;
     begin
         if M1.nombre_colonne = M2.nombre_ligne then
             Produit.nombre_ligne := M1.nombre_ligne;
@@ -135,7 +127,7 @@ package body matrice is
         return T;
     end Transpose;
     
-    function "*" (lambda:in Float ; M:in T_mat) return T_mat is
+    function "*" (lambda:in float ; M:in T_mat) return T_mat is
         T : T_mat;
     begin
         T.nombre_colonne := M.nombre_colonne;
@@ -148,12 +140,12 @@ package body matrice is
         return T;
     end "*";
 
-    function norme (M:in T_mat) return Float is
-        s : Float;
+    function norme (V : in T_vecteur) return float is
+        s : float;
     begin
         s := 0.0;
-        for i in 1..M.nombre_colonne loop
-            s := s + M.Mat(1,i)*M.Mat(1,i);
+        for i in 1..V.longueur loop
+            s := s + V.tab(i)*V.tab(i);
         end loop;
         return sqrt(s);
     end norme;
@@ -170,4 +162,101 @@ package body matrice is
         end loop;
     end Afficher;
 
+    function "*" (V : in T_vecteur; M : in T_mat) return T_vecteur is
+        Produit: T_vecteur;
+        s: float;
+    begin
+        Produit.longueur := M.nombre_colonne;
+        if V.longueur = M.nombre_ligne then
+            for j in 1..Produit.longueur loop
+                s := 0.0;
+                for k in 1..M.nombre_ligne loop
+                    s := s + V.tab(k)*M.Mat(k,j);
+                end loop;
+                Produit.Tab(j) := s;
+            end loop;
+            return Produit;
+        else
+            raise Taille_Incompatible_Multiplication;
+        end if;
+    end "*";
+
+    procedure echange(V: in out T_vecteur; i, j: Integer) is
+      Temp: Float;
+    begin
+      Temp := V.tab(i);
+      V.tab(i) := V.tab(j);
+      V.tab(j) := Temp;
+    end echange;
+
+   procedure Quicksort(V: in out T_vecteur; bas, haut: Integer; Indices_tries : out T_vecteur) is
+      i, j: Integer;
+      Pivot : Float;
+   begin
+    -- Création Indices_triés
+    Indices_tries.longueur := V.longueur;
+    for i in 1..Indices_tries.longueur loop
+        Indices_tries.tab(i) := Float(i) -1.0 ;
+    end loop;
+    if bas < haut then
+         Pivot := V.tab((bas + haut) / 2);
+         i := bas;
+         j := haut;
+         while i <= j loop
+            while V.tab(i) < Pivot loop
+               i := i + 1;
+            end loop;
+            while V.tab(j) > Pivot loop
+               j := j - 1;
+            end loop;
+            echange(V, i, j);
+            echange(Indices_tries, i, j);
+            i := i + 1;
+            j := j - 1;
+         end loop;
+         Quicksort(V, bas, j, Indices_tries);
+         Quicksort(V, i, haut, Indices_tries);
+    end if;
+   end Quicksort;
+
+    function "*" (lambda:in float ; V :in T_vecteur) return T_vecteur is
+        res : T_vecteur;
+    begin
+        res.longueur := V.longueur;
+        for i in 1..res.longueur loop
+            res.tab(i) := lambda * V.tab(i);
+        end loop;
+        return res;
+    end "*";
+
+    procedure Afficher(V: T_vecteur) is
+    begin
+    Put("Vecteur : (");
+    for i in 1..V.longueur loop
+        Put(V.tab(i));
+        if i < V.longueur then
+            Put(", ");
+        end if;
+    end loop;
+    Put_Line(")");
+end Afficher;
+
+    
+    function Ligne_max(V:in T_vecteur) return integer is
+        maximum: Float;
+        indice : integer;
+    begin
+            maximum := 0.0;
+            indice := 0;
+            for i in 1..V.longueur loop
+                if V.tab(i) >= maximum then
+                    maximum := V.tab(i);
+                    indice := i;
+                else
+                    Null;
+                end if;
+            end loop;
+            return indice;
+    end Ligne_max;    
+    
 end matrice;

@@ -8,8 +8,8 @@ with Matrice;
 
 procedure Main is
    -- Instanciation matrice
-   package Matrice_80 is new Matrice(Capacite => 300);
-   use Matrice_80;
+   package Matrice_vecteur is new Matrice(Capacite => 10);
+   use Matrice_vecteur;
    
    --Exceptions
       arguments_invalides : exception;
@@ -23,6 +23,7 @@ procedure Main is
       Prefix : Unbounded_String; -- Préfixe des fichiers résultats
       Pleine : Boolean; -- Booleen pour choisir l’algorithme avec des matrices pleines (true) ou creuses (false)
       i : Integer; -- Indice pour parcourir des listes
+      indice : Integer;
       nombre_site : Integer; -- Nombre de sites dans le graphe
       fichier : Ada.Text_IO.File_Type; --Fichier .net à lire
       Fichier_pr : Ada.Text_IO.File_Type; --Fichier .pr à créer
@@ -32,18 +33,15 @@ procedure Main is
       -- Nombre de liaison d'un site
       s : Float;
       --Vecteurs poids
-      pik : T_mat;
-      pik_prec_T : T_mat;
-      pik_T : T_mat;
-      Tri_pik : T_mat;
+      pik : T_vecteur;
+      pik_prec : T_vecteur;
+      tri_pik : T_vecteur;
       --Vecteur pahe rank
-      page_rank : T_mat;
+      page_rank : T_vecteur;
       -- Matrices
       M_S : T_mat;
       M_I : T_mat;
       G : T_mat; -- Matrice de google
-      -- Indice de la ligne max
-      indice : Integer;
       -- Nom fichiers
       Nom_fichier_pr : Unbounded_String;
       Nom_fichier_prw : Unbounded_String;
@@ -102,7 +100,7 @@ begin
    Put(Argument(Argument_Count));
    open (fichier, In_File, Argument(Argument_Count));
    Get (fichier, nombre_site);
-   Initialiser(nombre_site,nombre_site,0.0,M_S);
+   Initialiser_matrice(nombre_site,nombre_site,0.0,M_S);
 
    -- Calculer la matrice M_S
 	begin
@@ -126,7 +124,9 @@ begin
       -- Si la ligne est vide
       if ligne_vide(M_S,i) then
          -- Remplir la ligne de 1/nombre de site
-         Modifier_ligne(M_S,i,1.0/Float (nombre_site));
+         for j in 1..M_S.nombre_colonne loop
+            M_S.Mat(i,j) := 1.0/Float (nombre_site);
+         end loop;
       else
          -- Calculer le nombre de liaison du site (i-1)
          s := 0.0;
@@ -139,31 +139,32 @@ begin
             M_S.Mat(i,j) := M_S.Mat(i,j) / s;
          end loop;
       end if;
+      Afficher(M_S);
    end loop;
    Close (fichier);
 
-   -- Calculer G (OK)
-   Initialiser(nombre_site,nombre_site,1.0,M_I);
+   -- Calculer G
+   Initialiser_matrice(nombre_site,nombre_site,1.0,M_I);
    G := (alpha * M_S) + (((1.0-alpha)/Float (nombre_site)) * M_I);
 
    --Calculer le vecteur des poids
-   Initialiser(nombre_site,1,1.0/Float(nombre_site),pik);
+   Initialiser_vecteur(nombre_site,1.0/Float(nombre_site),pik);
    i := 1;
-   pik_T := Transpose(pik);
    loop
-      pik_prec_T := pik_T;
-      pik_T := pik_T * G;
-   exit when (i<nombre_site) and then (norme(pik_T + ((-1.0) * pik_prec_T))>epsilon);
+      pik_prec := pik;
+      pik := pik * G;
+      i := i + 1;
+   exit when (i < nombre_site) or else ( norme(pik + ((-1.0) * pik_prec))> epsilon );
    end loop;
-   pik := Transpose(pik_T);
+   Afficher(pik);
 
    -- Calculer le page rank
    Tri_pik := pik;
-   Initialiser(nombre_site,1,0.0,page_rank);
+   Initialiser_vecteur(nombre_site,0.0,page_rank);
    for i in 1..nombre_site loop
       indice := Ligne_max(Tri_pik);
-      page_rank.Mat(i,1) := Float(indice) - 1.0;
-      Tri_pik.Mat(indice,1) := 0.0;
+      page_rank.tab(i) := Float(indice) - 1.0;
+      Tri_pik.tab(indice) := 0.0;
    end loop;
 
    --Enregistrer le fichier .pr et .pwd
@@ -177,7 +178,7 @@ begin
    -- Créer le fichier .pr
 	Create (Fichier_pr, Out_File, To_String (Nom_fichier_pr));
    for i in 1..nombre_site loop
-      Put (Fichier_pr, Integer(page_rank.Mat(i,1)),1);
+      Put (Fichier_pr, Integer(page_rank.tab(i)),1);
       New_Line (Fichier_pr);
    end loop;
 	close (Fichier_pr);
@@ -192,7 +193,7 @@ begin
    New_Line (Fichier_prw);
    Afficher(pik);
    for i in 1..nombre_site loop
-      Put (Fichier_prw, pik.Mat(i,1),1);
+      Put (Fichier_prw, pik.tab(i),1);
       New_Line (Fichier_prw);
    end loop;
 	close (Fichier_prw);
