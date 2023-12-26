@@ -1,0 +1,211 @@
+V "GNAT Lib v12"
+A -gnatwa
+A -g
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_RECURSION
+
+U matrice%b		matrice.adb		1e1dd082 NE OO PK GE IL
+W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+U matrice%s		matrice.ads		45fcca6f BN EE NE OO PK GE
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+
+D ada.ads		20230508121439 76789da1 ada%s
+D a-except.ads		20230508121439 2a7d8d70 ada.exceptions%s
+D a-flteio.ads		20230508121439 e18a47a0 ada.float_text_io%s
+D a-ioexce.ads		20230508121439 40018c65 ada.io_exceptions%s
+D a-numeri.ads		20230508121439 84bea7a3 ada.numerics%s
+D a-nuelfu.ads		20230508121439 03e83d1c ada.numerics.elementary_functions%s
+D a-ngelfu.ads		20230508121439 e6ec3af5 ada.numerics.generic_elementary_functions%s
+D a-stream.ads		20230508121439 119b8fb3 ada.streams%s
+D a-string.ads		20230508121439 90ac6797 ada.strings%s
+D a-sttebu.ads		20230508121439 18209c64 ada.strings.text_buffers%s
+D a-stuten.ads		20230508121439 33c54060 ada.strings.utf_encoding%s
+D a-tags.ads		20230508121439 9eaa38c6 ada.tags%s
+D a-textio.ads		20230508121439 deada98a ada.text_io%s
+D a-tiflio.ads		20230508121439 fcca4daa ada.text_io.float_io%s
+D a-unccon.ads		20230508121439 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20230508121439 edec285f interfaces%s
+D i-cstrea.ads		20230508121439 e53d8b8e interfaces.c_streams%s
+D matrice.ads		20231219195534 45fcca6f matrice%s
+D matrice.adb		20231219195543 672ec9db matrice%b
+D system.ads		20230508121439 a2da961d system%s
+D s-crtl.ads		20230508121439 8a0692f8 system.crtl%s
+D s-exctab.ads		20230508121439 91bef6ef system.exception_table%s
+D s-ficobl.ads		20230508121439 dc5161d4 system.file_control_block%s
+D s-parame.ads		20230508121439 d494a4a6 system.parameters%s
+D s-putima.ads		20230508121439 4e095881 system.put_images%s
+D s-secsta.ads		20230508121439 62cd9202 system.secondary_stack%s
+D s-soflin.ads		20230508121439 df77073e system.soft_links%s
+D s-stache.ads		20230508121439 0b81c1fe system.stack_checking%s
+D s-stalib.ads		20230508121439 1c9580f6 system.standard_library%s
+D s-stoele.ads		20230508121439 6d8e1ff4 system.storage_elements%s
+D s-stoele.adb		20230508121439 8f5a9db6 system.storage_elements%b
+D s-traent.ads		20230508121439 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20230508121439 fa2a7f59 system.unsigned_types%s
+D s-wchcon.ads		20230508121439 d9032363 system.wch_con%s
+D unchconv.ads		20230508121439 ca2f9e18 unchecked_conversion%s
+G a e
+G c Z s b [matrice standard 3 9 none]
+X 1 ada.ads
+16K9*Ada 20e8 19|1r6 1r46 2r6 2r45 3r6 3r37
+X 3 a-flteio.ads
+20K13*Float_Text_IO[14|46] 19|3w10 3r41
+X 5 a-numeri.ads
+16K13*Numerics 35e17 19|1r10 1r50
+X 6 a-nuelfu.ads
+18K22*Elementary_Functions[7|39] 19|1w19 1r59
+X 7 a-ngelfu.ads
+52V13*Sqrt{float} 19|150s16[6|18]
+X 13 a-textio.ads
+58K13*Text_IO 727e16 19|2w10 2r49
+263U14*New_Line 19|155s9 161s13
+464U14*Put 19|159s17 234s5 238s13
+507U14*Put_Line 19|241s5
+X 14 a-tiflio.ads
+82U14*Put 19|158s17[3|20] 236s9[3|20]
+X 18 matrice.ads
+2i5 Capacite{integer} 13r32 13r44 21r28
+3k9*Matrice 2z5 85l5 85e12 19|5b14 262l5 262t12
+5X5*Taille_Hors_Capacite
+6X5*Case_Hors_Bornes 19|31r19
+7X5*Ligne_Hors_Bornes 19|43r19
+8X5*Taille_Differente_Addition 19|75r19 89r19
+9X5*Taille_Incompatible_Multiplication 19|112r19 180r19
+10X5*Maximum_Indeterminable
+11X5*Module_Indeterminable
+13A10*T_Matrice(float)<integer><integer> 18r18
+14R10*T_mat 19e19 30r81 37r32 41r36 45r39 49r30 49r44 57r31 57r45 61r44 64r29
+. 64r43 72r42 72r56 79r32 19|7r81 26r36 36r39 47r32 61r30 61r44 62r16 94r28
+. 94r42 95r18 117r29 117r43 118r13 130r42 130r56 131r13 153r32 165r44
+16i13 nombre_ligne{integer} 19|15m11 28r36 38r36 65r57 65r75 67m19 67r38
+. 68r28 98r35 99m21 99r40 101r33 120r31 121m11 122r23 134m11 134r29 135r23
+. 156r23 170r27 173r31
+17i13 nombre_colonne{integer} 19|14m11 28r81 39r27 51r23 65r15 65r35 66m19
+. 66r40 69r32 98r15 100m21 100r42 102r37 104r36 120m11 121r29 123r27 133m11
+. 133r31 136r27 157r27 169r31
+18a13 Mat{13A10} 19|11m19 29m15 40m19 52r22 70m27 70r42 70r56 105r37 105r49
+. 107m29 124m19 124r33 137m19 137r42 158r24 174r41
+21A10*T_Tab(float)<integer> 25r19
+22R10*T_vecteur 26e19 33r71 53r30 53r48 61r26 61r58 69r25 75r42 75r60 77r35
+. 77r86 81r32 83r29 19|18r71 79r30 79r48 80r16 143r28 165r26 165r58 166r18
+. 184r33 192r34 192r85 222r43 222r61 223r15 232r27 245r29
+24i13 longueur{integer} 19|23m11 82r15 82r29 83m19 83r34 84r31 147r23 169m17
+. 170r14 171r33 197m19 197r33 198r31 225m13 225r27 226r25 235r19 237r18 251r27
+25a13 tab{21A10} 19|21m15 85m23 85r36 85r48 148r24 148r33 174r32 176m25 187r17
+. 188m9 188r21 189m9 199m23 202r21 206r21 209r21 227m17 227r38 236r15 252r22
+. 253r34
+30U15*Initialiser_matrice 30>35 30>49 30>63 30<75 19|7b15 16l9 16t28
+30i35 l{integer} 19|7b35 9r21 15r27
+30i49 c{integer} 19|7b49 10r25 14r29
+30f63 x{float} 19|7b63 11r31
+30r75 M{14R10} 19|7b75 11m17 14m9 15m9
+33U15*Initialiser_vecteur 33>35 33>51 33<63 19|18b15 24l9 24t28
+33i35 l{integer} 19|18b35 20r21 23r23
+33f51 x{float} 19|18b51 21r25
+33r63 V{22R10} 19|18b63 21m13 23m9
+37V14*Ligne_Vide{boolean} 37>26 37>39 19|47b14 59l9 59t19
+37r26 M{14R10} 19|47b26 51r21 52r20
+37i39 l{integer} 19|47b39 52r26
+41U15*Enregistrer 41=27 41>43 41>61 41>81 19|26b15 33l9 33t20
+41r27 M{14R10} 19|26b27 28r34 28r79 29m13
+41i43 ligne{integer} 19|26b43 28r12 28r26 29r19
+41i61 colonne{integer} 19|26b61 28r53 28r69 29r25
+41f81 valeur{float} 19|26b81 29r37
+45U15*Modifier_ligne 45=30 45>46 45>64 19|36b15 45l9 45t23
+45r30 M{14R10} 19|36b30 38r34 39r25 40m17
+45i46 ligne{integer} 19|36b46 38r12 38r26 40r23
+45f64 valeur{float} 19|36b64 40r35
+49V15*"+"{14R10} 49>19 49>23 19|61b15 77l10 77t12
+49r19 M1{14R10} 19|61b19 65r12 65r54 66r37 68r25 70r39
+49r23 M2{14R10} 19|61b22 65r32 65r72 67r35 69r29 70r53
+53V15*"+"{22R10} 53>19 53>23 19|79b15 91l10 91t12
+53r19 V1{22R10} 19|79b19 82r12 83r31 85r33
+53r23 V2{22R10} 19|79b23 82r26 85r45
+57V15*"*"{14R10} 57>19 57>23 19|94b15 114l10 114t12
+57r19 M1{14R10} 19|94b19 98r12 99r37 104r33 105r34
+57r23 M2{14R10} 19|94b22 98r32 100r39 105r46
+61V15*"*"{22R10} 61>19 61>37 19|165b15 182l10 182t12
+61r19 V{22R10} 19|165b19 170r12 174r30
+61r37 M{14R10} 19|165b37 169r29 170r25 173r29 174r39
+64V14*Transpose{14R10} 64>24 19|117b14 128l9 128t18
+64r24 M{14R10} 19|117b24 120r29 121r27 122r21 123r25 124r31
+69V14*norme{float} 69>21 19|143b14 151l9 151t14
+69r21 V{22R10} 19|143b21 147r21 148r22 148r31
+72V15*"*"{14R10} 72>19 72>37 19|130b15 141l10 141t12
+72f19 lambda{float} 19|130b19 137r31
+72r37 M{14R10} 19|130b37 133r29 134r27 135r21 136r25 137r40
+75V15*"*"{22R10} 75>19 75>37 19|222b15 230l10 230t12
+75f19 lambda{float} 19|222b19 227r27
+75r37 V{22R10} 19|222b37 225r25 227r36
+77U15*Quicksort 77=25 77>46 77>51 77<66 19|192b14 217s10 218s10 220l8 220t17
+77r25 V{22R10} 19|192b24 197r31 202r19 206r19 209r19 212m21 217m20 218m20
+77i46 bas{integer} 19|192b45 201r8 202r26 203r15 217r23
+77i51 haut{integer} 19|192b50 201r14 202r32 204r15 218r26
+77r66 Indices_tries{22R10} 19|192b65 197m5 198r17 199m9 213m21 217m31 218m32
+79U15*Afficher 79>25 19|153b15 163l9 163t17
+79r25 M{14R10} 19|153b25 156r21 157r25 158r22
+81U15*Afficher 81>25 19|232b15 242l5 242t13
+81r25 V{22R10} 19|232b24 235r17 236r13 237r16
+83V14*Ligne_max{integer} 83>24 19|245b14 260l9 260t18
+83r24 V{22R10} 19|245b24 251r25 252r20 253r32
+X 19 matrice.adb
+9i13 i{integer} 11r23
+10i17 j{integer} 11r25
+20i13 i{integer} 21r19
+39i17 i{integer} 40r29
+48b9 res{boolean} 50m9 53m17 58r16
+51i13 j{integer} 52r28
+62r9 Somme{18|14R10} 66m13 67m13 70m21 73r20
+68i17 i{integer} 70r31 70r46 70r60
+69i21 j{integer} 70r33 70r48 70r62
+80r9 Somme{18|22R10} 83m13 84r25 85m17 87r20
+84i17 i{integer} 85r27 85r40 85r52
+95r9 Produit{18|14R10} 99m13 100m13 101r25 102r29 107m21 110r20
+96f9 s{float} 103m21 105m25 105r30 107r41
+101i17 i{integer} 105r41 107r33
+102i21 j{integer} 105r55 107r35
+104i25 k{integer} 105r43 105r53
+118r9 T{18|14R10} 120m9 121m9 124m17 127r16
+122i13 i{integer} 124r25 124r37
+123i17 j{integer} 124r23 124r39
+131r9 T{18|14R10} 133m9 134m9 137m17 140r16
+135i13 i{integer} 137r23 137r46
+136i17 j{integer} 137r25 137r48
+144f9 s{float} 146m9 148m13 148r18 150r21
+147i13 i{integer} 148r28 148r37
+156i13 i{integer} 158r28
+157i17 j{integer} 158r31
+166r9 Produit{18|22R10} 169m9 171r25 176m17 178r20
+167f9 s{float} 172m17 174m21 174r26 176r35
+171i17 j{integer} 174r47 176r29
+173i21 k{integer} 174r36 174r45
+184U15 echange 184b15 184=23 184>44 184>47 190l9 190t16 212s13 213s13
+184r23 V{18|22R10} 187r15 188m7 188r19 189m7
+184i44 i{integer} 187r21 188r13
+184i47 j{integer} 188r25 189r13
+185f7 Temp{float} 187m7 189r19
+193i7 i{integer} 203m10 205r16 206r25 207m16 207r21 212r24 213r36 214m13
+. 214r18 218r23
+193i10 j{integer} 204m10 205r21 209r25 210m16 210r21 212r27 213r39 215m13
+. 215r18 217r28
+194f7 Pivot{float} 202m10 206r30 209r30
+198i9 i{integer} 199r27 199r39
+223r9 res{18|22R10} 225m9 226r21 227m13 229r16
+226i13 i{integer} 227r21 227r42
+235i9 i{integer} 236r19 237r12
+246f9 maximum{float} 249m13 252r32 253m21
+247i9 indice{integer} 250m13 254m21 259r20
+251i17 i{integer} 252r26 253r38 254r31
+
