@@ -10,9 +10,6 @@ package body page_rank_matrice_pleine is
       package Matrice_vecteur is new Matrice(Capacite => nombre_site);
       use Matrice_vecteur;
       
-      --Exceptions
-         erreur_lecture_fichier : exception;
-      
       --Variables
          poubelle : Integer; -- Pour lire une ligne du fichier net dans le vide
          i : Integer; -- Indice pour parcourir des listes
@@ -20,8 +17,8 @@ package body page_rank_matrice_pleine is
          fichier : Ada.Text_IO.File_Type; --Fichier .net à lire
          Fichier_pr : Ada.Text_IO.File_Type; --Fichier .pr à créer
          Fichier_prw : Ada.Text_IO.File_Type; --Fichier .prw à créer
-         page_source : Integer; --Numéro site dé
-         b : Integer;
+         depart : Integer; --Numéro site dé
+         arrive : Integer;
          -- Nombre de liaison d'un site
          s : Float;
          --Vecteurs poids
@@ -50,10 +47,10 @@ package body page_rank_matrice_pleine is
          -- Tant qu'il y a encore des valeurs à lire
          while not End_Of_file (fichier) loop
             -- Lire les deux prochaines valeurs
-            Get (fichier, page_source);
-            Get (fichier, b); 
+            Get (fichier, depart);
+            Get (fichier, arrive); 
             -- Mettre un 1 dans la matrice pour signifier le lien
-            M_S.Mat(page_source+1,b+1) := 1.0;
+            M_S.Mat(depart+1,arrive+1) := 1.0;
          end loop;
       exception
          when End_Error =>
