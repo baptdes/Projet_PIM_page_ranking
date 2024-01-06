@@ -1,4 +1,13 @@
-package body matrice_creuse is
+with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
+with Ada.Text_IO;			use Ada.Text_IO;
+with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
+
+package body Matrice_creuse is
+
+    function Fonction_hachage(taille: in Integer; Cle1: in Integer; Cle2: in Integer) return Integer is
+    begin
+        return (Cle1 + Cle2) mod taille;
+    end Fonction_hachage;
     
     procedure Initialiser_matrice(l:in Integer; c:in Integer; M:out T_mat) is
     begin
@@ -11,10 +20,26 @@ package body matrice_creuse is
             raise Taille_Hors_Capacite;
         end if;
     end Initialiser_matrice;
+
+    function Valeur(M : in T_mat; i : in Integer; j : in Integer) return Float is
+        Out_of_bounds : exception;
+    begin
+        -- Si les indices dépassent les bornes ont lève une exception
+        if i > M.nombre_ligne or j > M.nombre_colonne then
+            raise Out_of_bounds;
+        else
+            -- On regarde si la clé est présente et si c'est le cas ont retourne la valeur associé sinon 0.0
+            if Hachage.Cle_Presente(M.Mat, i, j) then
+                return Hachage.La_Valeur(M.Mat,i,j);
+            else
+                return 0.0;
+            end if;
+        end if;
+    end Valeur;
         
     --Est-ce que la ligne "ligne" dans la matrice M est vide ?
     --Renvoie l'exception Ligne_Hors_Bornes si ligne>nombre_ligne
-    function Ligne_Vide (M :in T_mat; l:in Integer) is
+    function Ligne_Vide (M :in T_mat; l:in Integer) return Boolean is
     begin
         if M.nombre_ligne >= l then
             for i in 1..M.nombre_colonne loop
@@ -29,15 +54,15 @@ package body matrice_creuse is
             -- on léve l'exception si l > M.nombre_ligne
             raise Ligne_Hors_Bornes;
         end if;
-    end Ligne_Vide;            
+    end Ligne_Vide;
     
     --Enregistrer valeur à la case (ligne,colonne) dans la matrice M
     --Renvoie l'Excepetion Case_Hors_Bornes si ligne > M.nombre_ligne ou si colonne > M.nombre_colonne
     procedure Enregistrer(M:in out T_mat; ligne:in Integer; colonne:in Integer; valeur:in float) is
     begin
-        --dans le cas d'une matrice creuse, si la valeur est 0, c'est que l'on veut supprimer la clé du tableau
-        --de hachage
-        if valeur = 0 then
+        -- Dans le cas d'une matrice creuse, si la valeur est 0, c'est que l'on veut supprimer la clé du tableau
+        -- de hachage
+        if abs(valeur - 0.0) < 0.00001  then
             -- est-ce que la valeur était différente de 0 avant ? Ce qui revient à demander si la clé est présente dans
             -- notre tableau de hachage ou non
             if Hachage.Cle_Presente(M.Mat, ligne, colonne) then
@@ -69,55 +94,131 @@ package body matrice_creuse is
     
     --Addition de deux matrices.
     --Renvoie l'exception Taille_Differente_Addition si les tailles ne correspondent pas
-    function "+" (M1, M2: in T_mat) is
+    function "+" (M1, M2: in T_mat) return T_mat is
     S : T_mat; -- S la matrice Somme
+    val : Float; -- Valeur de la case (i,j)
     begin
         if M1.nombre_colonne = M2.nombre_colonne and M1.nombre_ligne = M2.nombre_ligne then
             S.nombre_colonne := M1.nombre_colonne;
             S.nombre_ligne := M1.nombre_ligne;
             for i in 1..S.nombre_ligne loop
                 for j in 1..S.nombre_colonne loop
-                    -- Si les deux matrices ont des valeurs différentes de 0 en i,j, on met dans S(i,j) la somme des deux
-                    if Hachage.Cle_Presente(M1.Mat, i, j) and Hachage.Cle_Presente(M2.Mat, i, j) then
-                        Enregistrer(S.Mat,i,j,(Hachage.La_Valeur(M1.Mat,i,j)+Hachage.La_Valeur(M2.Mat,i,j)));
-                    elsif Hachage.Cle_Presente(M1.Mat, i, j) then --Si la premiére matrice à une valeur en i,j on la met dans S
-                        Enregistrer(S.Mat,i,j,Hachage.La_Valeur(M1.Mat,i,j));
-                    elsif Hachage.Cle_Presente(M2.Mat, i, j) then --Si la deuxiemme matrice à une valeur en i,j on la met dans S
-                        Enregistrer(S.Mat,i,j,Hachage.La_Valeur(M2.Mat,i,j));
-                    else -- Sinon, c'est que aucune des matrice n'a de valeur autre que 0 en i,j auquel cas, on laisse S(i,j) à 0
-                        null;
-                    end if;
+                    val := Valeur(M1,i,j) + Valeur(M2,i,j);
+                    Enregistrer(S.Mat,i,j,Val);
                 end loop;
             end loop;
         -- Si les tailles de matrices ne sont pas les mêmes, alors on léve l'exception
         else
             raise Taille_Differente_Addition;
-        end "+";
-                                    
-                                        
+        end if;
+        return S;
+    end "+";
 
     --Multiplication de deux matrices (attention, on fait M1*M2 et non M2*M1)
     --Renvoie l'exception Taille_Incompatible_Multiplication si les dimenssions ne permettent pas la multiplication
-    function "*" (M1, M2 : in T_mat) return T_mat;
-    
-    
-    --Renvoyer la transposé d'une matrice
-    function Transpose(M:in T_mat) return T_mat;
-            --Post => Transpose'Result.nombre_ligne = M.nombre_colonne
-            --and Transpose'Result.nombre_colonne = M.nombre_ligne
+    function "*" (M1, M2 : in T_mat) return T_mat is
+        Produit: T_mat;
+        s: float;
+    begin
+        if M1.nombre_colonne = M2.nombre_ligne then
+            Produit.nombre_ligne := M1.nombre_ligne;
+            Produit.nombre_colonne := M2.nombre_colonne;
+            for i in 1..Produit.nombre_ligne loop
+                for j in 1..Produit.nombre_colonne loop
+                    s := 0.0;
+                    for k in 1..M1.nombre_colonne loop
+                        s := s + Valeur(M1,i,k)*Valeur(M2,k,j);
+                    end loop;
+                    Enregistrer(Produit.Mat,i,j,s);
+                end loop;
+            end loop;
+            return Produit;
+        else
+            raise Taille_Incompatible_Multiplication;
+        end if;
+    end "*";
     
     --Multiplication d'une matrice par un scalaire
-    function "*" (lambda:in float ; M:in T_mat) return T_mat;
+    function "*" (lambda:in float ; M:in T_mat) return T_mat is
+        T : T_mat;
+    begin
+        T.nombre_colonne := M.nombre_colonne;
+        T.nombre_ligne := M.nombre_ligne;
+        for i in 1..M.nombre_ligne loop
+            for j in 1..M.nombre_colonne loop
+                Enregistrer(T,i,j,lambda * valeur(M,i,j));
+            end loop;
+        end loop;
+        return T;
+    end "*";
 
-    --Multiplication d'un vecteur par un scalaire
-    function "*" (lambda:in float ; V:in T_vecteur) return T_vecteur;
+    --Multiplication d'un vecteur par une matrice
+    function "*" (V : in T_vecteur; M : in T_mat) return T_vecteur is
+        Produit: T_vecteur;
+        s: float;
+    begin
+        Produit.longueur := M.nombre_colonne;
+        if V.longueur = M.nombre_ligne then
+            for j in 1..Produit.longueur loop
+                s := 0.0;
+                for k in 1..M.nombre_ligne loop
+                    s := s + V.tab(k)*Valeur(M,k,j);
+                end loop;
+                Produit.Tab(j) := s;
+            end loop;
+            return Produit;
+        else
+            raise Taille_Incompatible_Multiplication;
+        end if;
+    end "*";
 
-    procedure Quicksort(V: in out T_vecteur; bas, haut: Integer; Indices_tries : out T_vecteur);
+    function "*" (lambda:in float ; V :in T_vecteur) return T_vecteur is
+        res : T_vecteur;
+    begin
+        res.longueur := V.longueur;
+        for i in 1..res.longueur loop
+            res.tab(i) := lambda * V.tab(i);
+        end loop;
+        return res;
+    end "*";
 
-    procedure Afficher (M : in T_mat);
+    procedure Afficher(V: T_vecteur) is
+    begin
+    Put("Vecteur : (");
+    for i in 1..V.longueur loop
+        Put(V.tab(i));
+        if i < V.longueur then
+            Put(", ");
+        end if;
+    end loop;
+    Put_Line(")");
+    end Afficher;
 
-    function Ligne_max(V:in T_vecteur) return integer;
+    function max(V:in T_vecteur) return integer is
+        maximum: Float;
+        indice : integer;
+    begin
+            maximum := 0.0;
+            indice := 0;
+            for i in 1..V.longueur loop
+                if V.tab(i) >= maximum then
+                    maximum := V.tab(i);
+                    indice := i;
+                else
+                    Null;
+                end if;
+            end loop;
+            return indice;
+    end max; 
 
-   
+    function norme (V : in T_vecteur) return float is
+        s : float;
+    begin
+        s := 0.0;
+        for i in 1..V.longueur loop
+            s := s + V.tab(i)*V.tab(i);
+        end loop;
+        return sqrt(s);
+    end norme;
 
-end matrice_creuse;
+end Matrice_creuse;

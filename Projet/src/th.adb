@@ -1,6 +1,5 @@
 with Ada.Text_IO;           use Ada.Text_IO;
 with Ada.Integer_Text_IO;   use Ada.Integer_Text_IO;
-with SDA_Exceptions;        use SDA_Exceptions;
 
 package body TH is
 
@@ -107,6 +106,5 @@ package body TH is
             traiter_lca(TH(i));
         end loop;
 	end Pour_Chaque;
-
 
 end TH;

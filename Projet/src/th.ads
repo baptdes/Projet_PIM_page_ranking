@@ -11,7 +11,7 @@ generic
 
 package TH is
 
-    type T_TH is limited private;
+    type T_TH is private;
 
     type T_Couple is record
         Cle_1 : T_Cle;
