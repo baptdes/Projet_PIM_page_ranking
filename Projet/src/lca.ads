@@ -7,7 +7,7 @@ generic
 
 package LCA is
 
-	type T_LCA is limited private;
+	type T_LCA is private;
 
 	-- Initialiser une Sda.  La Sda est vide.
 	procedure Initialiser(Sda: out T_LCA) with
