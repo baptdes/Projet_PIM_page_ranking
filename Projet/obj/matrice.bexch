@@ -1,0 +1,22 @@
+[MAPPING FILE]
+/tmp/GNAT-TEMP-000003.TMP
+[TOOLCHAIN VERSION]
+ada
+GNAT 12
+[MAIN BASE NAME]
+matrice
+[COMPILER PATH]
+/usr/bin/x86_64-linux-gnu-gcc-12
+[COMPILER LEADING SWITCHES]
+-c
+-x
+ada
+-gnatA
+[MAIN DEPENDENCY FILE]
+/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/obj/matrice.ali
+[DEPENDENCY FILES]
+[BINDING OPTIONS]
+gnatbind_prefix=x86_64-linux-gnu-
+[PROJECT FILES]
+/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/default.gpr
+20231230204925 498aefd3da2303cf2f1e6da756e8fc43

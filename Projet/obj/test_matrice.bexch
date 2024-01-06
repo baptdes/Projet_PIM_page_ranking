@@ -1,0 +1,20 @@
+[GENERATED OBJECT FILE]
+b__test_matrice.o
+[PROJECT FILES]
+/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/default.gpr
+20231214101846 a0ac5b2e0f8fc2a6aaaf39e23fbee041
+[BOUND OBJECT FILES]
+/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/obj/matrice.o
+/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/obj/test_matrice.o
+[GENERATED SOURCE FILES]
+b__test_matrice.ads
+b__test_matrice.adb
+b__test_matrice.ali
+[RESULTING OPTIONS]
+-L/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/obj/
+-L/home/alexandre/Année_1/PIM/Projet_PIM_page_ranking/Projet/obj/
+-L/usr/lib/gcc/x86_64-linux-gnu/12/adalib/
+-shared
+-lgnat-12
+-lm
+-ldl

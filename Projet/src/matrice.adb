@@ -42,7 +42,7 @@ package body Matrice is
     
     procedure Modifier_ligne(M:in out T_mat; ligne:in Integer; valeur:in float) is
     begin
-        if ligne > 0 and ligne < M.nombre_ligne then
+        if ligne > 0 and ligne <= M.nombre_ligne then
             for i in 1..M.nombre_colonne loop
                 M.Mat(ligne,i) := valeur;
             end loop;

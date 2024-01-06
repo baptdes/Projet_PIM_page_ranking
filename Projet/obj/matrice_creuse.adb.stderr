@@ -1,0 +1,20 @@
+matrice_creuse.adb:1:14: error: missing body for "Fonction_hachage" declared at matrice_creuse.ads:16
+matrice_creuse.adb:1:14: error: missing body for "Initialiser_matrice" declared at matrice_creuse.ads:35
+matrice_creuse.adb:1:14: error: missing body for "Initialiser_vecteur" declared at matrice_creuse.ads:38
+matrice_creuse.adb:1:14: error: missing body for "Ligne_Vide" declared at matrice_creuse.ads:42
+matrice_creuse.adb:1:14: error: missing body for "Enregistrer" declared at matrice_creuse.ads:46
+matrice_creuse.adb:1:14: error: missing body for "Modifier_ligne" declared at matrice_creuse.ads:50
+matrice_creuse.adb:1:14: error: missing body for "+" declared at matrice_creuse.ads:54
+matrice_creuse.adb:1:14: error: missing body for "+" declared at matrice_creuse.ads:58
+matrice_creuse.adb:1:14: error: missing body for "*" declared at matrice_creuse.ads:62
+matrice_creuse.adb:1:14: error: missing body for "*" declared at matrice_creuse.ads:66
+matrice_creuse.adb:1:14: error: missing body for "Transpose" declared at matrice_creuse.ads:69
+matrice_creuse.adb:1:14: error: missing body for "norme" declared at matrice_creuse.ads:74
+matrice_creuse.adb:1:14: error: missing body for "*" declared at matrice_creuse.ads:77
+matrice_creuse.adb:1:14: error: missing body for "*" declared at matrice_creuse.ads:80
+matrice_creuse.adb:1:14: error: missing body for "Quicksort" declared at matrice_creuse.ads:82
+matrice_creuse.adb:1:14: error: missing body for "Afficher" declared at matrice_creuse.ads:84
+matrice_creuse.adb:1:14: error: missing body for "Afficher" declared at matrice_creuse.ads:86
+matrice_creuse.adb:1:14: error: missing body for "Ligne_max" declared at matrice_creuse.ads:88
+matrice_creuse.ads:24:18: error: "T_TH" is not visible (more references follow)
+matrice_creuse.ads:24:18: error: non-visible declaration from "Hachage" at th.ads:14, instance at line 18
