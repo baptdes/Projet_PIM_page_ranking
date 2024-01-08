@@ -3,6 +3,11 @@ with Ada.Integer_Text_IO;   use Ada.Integer_Text_IO;
 
 package body TH is
 
+    function egale(Cle1 : T_Couple;Cle2 : T_Couple) return Boolean is
+    begin
+        return ((Cle1.Cle_1 = Cle2.Cle_1) and (Cle1.Cle_2 = Cle2.Cle_2));
+    end egale;
+
     procedure Couplage(Couple: out T_Couple; Cle1 : in T_Cle ; Cle2 : in T_Cle) is
     begin
         Couple.Cle_1 := Cle1;
@@ -24,8 +29,8 @@ package body TH is
 	end Detruire;
 
     procedure Afficher_Debug (TH : in T_TH) is
-       procedure afficher_debug_lca is new
-                LCA_TH.Afficher_Debug(Afficher_Cle => afficher_cle, Afficher_Donnee => afficher_donnee);
+            procedure afficher_debug_lca is new
+            LCA_TH.Afficher_Debug(Afficher_Cle => afficher_cle, Afficher_Donnee => afficher_donnee);
     begin
         for i in 1..Capacite loop
             Put ("LCA numéro");

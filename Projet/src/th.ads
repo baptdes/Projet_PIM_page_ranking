@@ -8,7 +8,6 @@ generic
     type T_Valeur is private;
     with function fonction_hachage (taille: in Integer; cle_1: in T_Cle; cle_2: in T_Cle) return Integer;
 
-
 package TH is
 
     type T_TH is private;
@@ -18,8 +17,10 @@ package TH is
         Cle_2 : T_Cle;
     end record;
 
+	function egale(Cle1 : T_Couple;Cle2 : T_Couple) return Boolean;
+
     package LCA_TH is
-        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur);
+        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur, egale => Egale);
     use LCA_TH;
 
     -- Permet de définir objet Couple grâce à deux clé
@@ -78,7 +79,6 @@ package TH is
     --
     -- LCA numéro X
     -- ["clé":valeur] --> ["clé": valeur] --> ...
-
 	generic
 		with procedure afficher_cle (Cle : T_Couple);
 		with procedure afficher_donnee (Valeur : in T_Valeur);

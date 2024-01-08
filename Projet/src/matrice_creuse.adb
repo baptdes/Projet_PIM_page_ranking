@@ -21,6 +21,24 @@ package body Matrice_creuse is
         end if;
     end Initialiser_matrice;
 
+    procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur) is
+    begin
+        for i in 1..l loop
+            V.Tab(i) := x;
+        end loop;
+        V.longueur := l;
+    end Initialiser_vecteur;
+
+    function nb_lignes(M : T_Mat) return Integer is
+    begin
+        return M.nombre_ligne;
+    end;
+
+    function nb_colones(M : T_Mat) return Integer is
+    begin
+        return M.nombre_ligne;
+    end;
+
     function Valeur(M : in T_mat; i : in Integer; j : in Integer) return Float is
         Out_of_bounds : exception;
     begin
@@ -222,3 +240,7 @@ package body Matrice_creuse is
     end norme;
 
 end Matrice_creuse;
+
+-- Architecture
+-- Proportion de travail
+-- Nombres d'heures passé

@@ -27,6 +27,15 @@ package Matrice_creuse is
             longueur : Integer;
             tab : T_Tab;
         end record;
+
+    --Renvoie le nombre de lignes
+    function nb_lignes(M : T_Mat) return Integer;
+
+    --Renvoie le nombre de colones
+    function nb_colones(M : T_Mat) return Integer;
+
+    -- Initialise un vecteur à la taille l
+    procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur);
     
     --Initialiser une matrice de taille l * c creuse (aucune valeur présente au début)
     --On léve l'exception Taille_Hors_Capacite si la taille demandé dépasse les capacités

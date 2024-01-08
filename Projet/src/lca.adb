@@ -90,7 +90,7 @@ package body LCA is
     begin
         if Sda = null then
             return False;
-        elsif Sda.all.Cle = Cle then
+        elsif egale(Sda.all.Cle,Cle) then
             return True;
         else
             return Cle_Presente(Sda.all.Suivant, Cle);
@@ -101,7 +101,7 @@ package body LCA is
 	begin
         if Sda = null then
             raise Cle_Absente_Exception;
-        elsif Sda.all.Cle = Cle then
+        elsif egale(Sda.all.Cle,Cle) then
             return Sda.all.Valeur;
         else
             return La_Valeur (Sda.all.Suivant, Cle);

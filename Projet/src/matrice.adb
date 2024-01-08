@@ -22,6 +22,16 @@ package body matrice is
         end loop;
         V.longueur := l;
     end Initialiser_vecteur;
+
+    function nb_lignes(M : T_Mat) return Integer is
+    begin
+        return M.nombre_ligne;
+    end;
+
+    function nb_colones(M : T_Mat) return Integer is
+    begin
+        return M.nombre_ligne;
+    end;
     
     procedure Enregistrer(M:in out T_mat; ligne:in Integer; colonne:in Integer; valeur:in float) is
     begin
