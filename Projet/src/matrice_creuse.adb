@@ -1,24 +1,20 @@
-with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
 with Ada.Text_IO;			use Ada.Text_IO;
 with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 package body Matrice_creuse is
 
     function Fonction_hachage(taille: in Integer; Cle1: in Integer; Cle2: in Integer) return Integer is
     begin
-        return (Cle1 + Cle2) mod taille;
+        return (Cle1 + Cle2) mod taille + 1;
     end Fonction_hachage;
     
     procedure Initialiser_matrice(l:in Integer; c:in Integer; M:out T_mat) is
     begin
         -- On vérifie que l'on se trouve dans les bornes de la matrice
-        if l < Capacite and l > 0 and c < Capacite and c > 0 then
-            M.nombre_colonne := c;
-            M.nombre_ligne := l;
-            Hachage.Initialiser(M.Mat);
-        else
-            raise Taille_Hors_Capacite;
-        end if;
+        M.nombre_colonne := c;
+        M.nombre_ligne := l;
+        Hachage.Initialiser(M.Mat);
     end Initialiser_matrice;
 
     procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur) is
@@ -172,18 +168,24 @@ package body Matrice_creuse is
 
     --Multiplication d'un vecteur par une matrice
     function "*" (V : in T_vecteur; M : in T_mat) return T_vecteur is
+
         Produit: T_vecteur;
-        s: float;
+
+        procedure Traiter_elem (Couple : T_Couple; Valeur: in Float) is
+            i : Integer;
+            j : integer;
+        begin
+            i := Couple.Cle_1;
+            j := Couple.Cle_2;
+            Produit.tab(j) := Produit.tab(j) + V.tab(i)*Valeur;
+        end Traiter_elem;
+        
+        procedure traiter_TH is new
+                hachage.Pour_Chaque(Traitement => Traiter_elem);
     begin
-        Produit.longueur := M.nombre_colonne;
+        Initialiser_vecteur(M.nombre_colonne,0.0,produit);
         if V.longueur = M.nombre_ligne then
-            for j in 1..Produit.longueur loop
-                s := 0.0;
-                for k in 1..M.nombre_ligne loop
-                    s := s + V.tab(k)*Valeur(M,k,j);
-                end loop;
-                Produit.Tab(j) := s;
-            end loop;
+            traiter_TH(M.Mat);
             return Produit;
         else
             raise Taille_Incompatible_Multiplication;
@@ -199,6 +201,20 @@ package body Matrice_creuse is
         end loop;
         return res;
     end "*";
+
+    function "+" (V1, V2: in T_vecteur) return T_vecteur is
+        Somme: T_vecteur;
+    begin
+        if V1.longueur = V2.longueur then
+            Somme.longueur := V1.longueur;
+            for i in 1..Somme.longueur loop
+                Somme.tab(i) := V1.tab(i) + V2.tab(i);
+            end loop;
+            return Somme;
+        else
+            raise Taille_Differente_Addition;
+        end if;   
+    end "+";
 
     procedure Afficher(V: T_vecteur) is
     begin
@@ -227,17 +243,49 @@ package body Matrice_creuse is
                 end if;
             end loop;
             return indice;
-    end max; 
+    end max;
 
-    function norme (V : in T_vecteur) return float is
+    function somme(V:in T_vecteur) return Float is
+        somme : Float;
+    begin
+        somme := 0.0;
+        for i in 1..V.longueur loop
+            somme := somme + V.tab(i);
+        end loop;
+        return somme;
+    end somme;
+
+    function "+"(V:in T_vecteur;x : in Float) return T_vecteur is
+        V_somme : T_vecteur;
+    begin
+        V_somme.longueur := V.longueur;
+        for i in 1..V.longueur loop
+            V_somme.tab(i) := V.tab(i) + x;
+        end loop;
+        return V_somme;
+    end "+";
+
+    function distance (V1 : in T_vecteur;V2 : in T_vecteur) return float is
         s : float;
     begin
         s := 0.0;
-        for i in 1..V.longueur loop
-            s := s + V.tab(i)*V.tab(i);
+        for i in 1..V1.longueur loop
+            s := s + (V1.tab(i) - V2.tab(i))*(V1.tab(i) - V2.tab(i));
         end loop;
         return sqrt(s);
-    end norme;
+    end distance;
+
+    procedure Pour_Chaque (M : in T_Mat) is
+        procedure traiter_TH is new
+                hachage.Pour_Chaque(Traitement => Traiter_element);
+    begin
+        traiter_TH(M.Mat);
+	end Pour_Chaque;
+
+    procedure Detruire_mat (M :  in out T_Mat) is
+    begin
+        Detruire(M.Mat);
+    end Detruire_mat;
 
 end Matrice_creuse;
 

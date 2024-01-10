@@ -1,11 +1,11 @@
 with TH;
+with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
 
 generic
     Capacite: Integer; -- Capacité max de la matrice
     Taille: Integer; --Nombre de cases dans le tableau de hachage
 package Matrice_creuse is
     
-    Taille_Hors_Capacite : exception;
     Case_Hors_Bornes : exception;
     Ligne_Hors_Bornes : exception;
     Taille_Differente_Addition: exception;
@@ -18,7 +18,7 @@ package Matrice_creuse is
     package Hachage is 
         new TH(Capacite => Taille, T_Cle => Integer, T_Valeur => Float, fonction_hachage => Fonction_hachage);
     use Hachage;
-    
+
     type T_Mat is private;
 
     type T_Tab is array(1..Capacite) of float;
@@ -69,8 +69,8 @@ package Matrice_creuse is
     --Renvoie l'exception Taille_Incompatible_Multiplication si les dimenssions ne permettent pas la multiplication
     function "*" (V : in T_vecteur; M : in T_mat) return T_vecteur;
 
-        --Renvoie le module d'une matrice colonne
-    function norme (V : T_vecteur) return float;
+        --Renvoie la distance entre deux vecteurs d'une matrice colonne
+    function distance (V1 : in T_vecteur;V2 : in T_vecteur) return float;
     
     --Multiplication d'une matrice par un scalaire
     function "*" (lambda:in float ; M:in T_mat) return T_mat;
@@ -78,10 +78,27 @@ package Matrice_creuse is
     --Multiplication d'un vecteur par un scalaire
     function "*" (lambda:in float ; V:in T_vecteur) return T_vecteur;
 
+        --Addition de deux vecteurs.
+    --Renvoie l'exception Taille_Differente_Addition si les tailles ne correspondent pas
+    function "+" (V1, V2: in T_vecteur) return T_vecteur;
+
     -- Renvoie le max d'un vecteur
     function max(V:in T_vecteur) return integer;
 
+    -- Somme les termes d'un vecteur
+    function somme(V:in T_vecteur) return Float;
+
+    --Somme d'un vecteur avec un réel
+    function "+"(V:in T_vecteur;x : in Float) return T_vecteur;
+
     procedure Afficher (V : in T_vecteur);
+
+    -- Détruire une matrice
+    procedure Detruire_mat (M :  in out T_Mat);
+
+    generic
+		with procedure Traiter_element (Couple : T_Couple; Valeur: in Float);
+	procedure Pour_Chaque (M : in T_Mat);
 
 private
     type T_mat is

@@ -69,7 +69,7 @@ package body TH is
         indice: Integer;
         Couple: T_Couple;
     begin
-        indice := fonction_hachage(Capacite,Cle1,Cle1);
+        indice := fonction_hachage(Capacite,Cle1,Cle2);
         Couplage(Couple, Cle1, Cle2);
         LCA_TH.Enregistrer(TH(indice), Couple, Valeur);
     end Enregistrer;

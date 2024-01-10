@@ -92,7 +92,7 @@ procedure test_matrice is
     end test_ligne_max;
     
 begin
-    Put_Line("Début tests");
+    Put_Line("Début tests matrices pleines");
     Put_Line("--------------------------------------");
     test_multiplication;
     Put_Line("Test multiplacation matricielle OK");
@@ -105,5 +105,5 @@ begin
     test_ligne_max;
     Put_Line("Test ligne_max OK");
     Put_Line("--------------------------------------");
-    Put_Line("Fin tests");
+    Put_Line("Fin tests matrices pleines");
 end;

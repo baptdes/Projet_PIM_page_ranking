@@ -15,13 +15,9 @@ procedure test_matrice_creuse is
         Initialiser_matrice(2, 2, M1);
 
         Enregistrer(M1,1,1,1.0);
-        Put(Valeur(M1,1,1));
         Enregistrer(M1,1,2,2.0);
-        Put(Valeur(M1,1,2));
         Enregistrer(M1,2,1,3.0);
-        Put(Valeur(M1,2,1));
         Enregistrer(M1,2,2,4.0);
-        Put(Valeur(M1,2,2));
 
         Assert(Valeur(M1,1,1) = 1.0);
         Assert(Valeur(M1,1,2) = 2.0);
@@ -94,9 +90,25 @@ procedure test_matrice_creuse is
         Assert(Valeur(M1,2,2) = 0.0);
     end test_modifier_ligne;
 
+    procedure test_multiplication_vecteur_matrice is
+        M: T_mat;
+        V : T_vecteur;
+        Mult : T_vecteur;
+    begin
+        Initialiser_matrice(2, 2, M);
+        Initialiser_vecteur(2,2.0,V);
+        Modifier_ligne(M,1,3.0);
+        Modifier_ligne(M,2,1.5);
+        V.tab(2) := 5.0;
+        Mult := V * M;
+
+        Assert(Mult.tab(1) = 13.5);
+        Assert(Mult.tab(2) = 13.5);
+    end test_multiplication_vecteur_matrice;
+
     
 begin
-    Put_Line("Début tests");
+    Put_Line("Début test matrices creuses");
     Put_Line("--------------------------------------");
     test_modifier_valeur;
     Put_Line("Test modifier_valeur OK");
@@ -106,6 +118,8 @@ begin
     Put_Line("Test addition matrices OK");
     test_modifier_ligne;
     Put_Line("Test modifier_ligne OK");
+    test_multiplication_vecteur_matrice;
+    Put_Line("Test multiplication vecteur matrice OK");
     Put_Line("--------------------------------------");
-    Put_Line("Fin tests");
+    Put_Line("Fin test matrices creuses");
 end;

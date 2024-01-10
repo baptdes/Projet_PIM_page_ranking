@@ -32,6 +32,10 @@ package Matrice is
     -- Initialise un vecteur à la taille l
     procedure Initialiser_vecteur(l : in Integer; x:in float; V : out T_vecteur);
 
+    function nb_lignes(M : T_Mat) return Integer;
+
+    function nb_colones(M : T_Mat) return Integer;
+
     --Est-ce que la ligne "ligne" dans la matrice M est vide ?
     --Renvoie l'exception Ligne_Hors_Bornes si ligne>nombre_ligne
     function Ligne_Vide (M :in T_mat; l:in Integer) return Boolean;

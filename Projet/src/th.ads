@@ -20,7 +20,7 @@ package TH is
 	function egale(Cle1 : T_Couple;Cle2 : T_Couple) return Boolean;
 
     package LCA_TH is
-        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur, egale => Egale);
+        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur, egale => egale);
     use LCA_TH;
 
     -- Permet de définir objet Couple grâce à deux clé
