@@ -1,10 +1,8 @@
--- Définition de structures de données associatives sous forme d'une liste
--- chaînée associative (LCA).
 with LCA;
 
 generic
     type T_Cle is private;
-    Capacite : Integer;
+    Capacite : Integer; -- Taille de la table de hachage (du tableau donc)
     type T_Valeur is private;
     with function fonction_hachage (taille: in Integer; cle_1: in T_Cle; cle_2: in T_Cle) return Integer;
 
@@ -17,10 +15,11 @@ package TH is
         Cle_2 : T_Cle;
     end record;
 
-	function egale(Cle1 : T_Couple;Cle2 : T_Couple) return Boolean;
+	-- Renvoie True si les deux couples sont égaux (c'est à dire que les deux valeurs des deux coubles sont égaux)
+	function "=" (Left : T_Couple; Right : T_Couple) return Boolean;
 
     package LCA_TH is
-        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur, egale => egale);
+        new LCA (T_Cle => T_Couple, T_Valeur => T_Valeur, "=" => "=");
     use LCA_TH;
 
     -- Permet de définir objet Couple grâce à deux clé

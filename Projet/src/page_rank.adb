@@ -27,7 +27,9 @@ procedure page_rank is
       fichier : Ada.Text_IO.File_Type; --Fichier .net à lire
       len : Integer; -- Longueur du nom du fichier net
 
-      -- Procedures
+   -- Procedures
+      
+      -- Traite les arguments et modifies les différentes variables si nécéssaire
       procedure Traiter_arguments(alpha : in out Float; k : in out Integer ; epsilon : in out Float ; Pleine : in out Boolean; Prefix : in out Unbounded_String; nom_fichier_net : out Unbounded_String) is
          i : Integer; -- Indice pour parcourir des listes
       begin
@@ -126,6 +128,7 @@ begin
     else
         page_rank_matrice_creuse.page_rank(nombre_site,alpha,k,epsilon,Prefix,nom_fichier_net);
     end if;
+
 exception
    when arguments_invalides => Null;
    when No_Argument_Error => Put_Line("Si vous voulez un résultat, il est préférable d'indiquer au moins le nom du fichier .net :)");

@@ -1,15 +1,32 @@
 with Ada.Text_IO;			use Ada.Text_IO;
 with Ada.Float_Text_IO;		use Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
-with Matrice;
+with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
+with vecteurs;
+with vecteurs.matrice_pleine;
 
 package body page_rank_matrice_pleine is
 
    procedure page_rank (nombre_site : in Integer; alpha : in Float; k : in Integer ; epsilon : in Float ; Prefix : in Unbounded_String; nom_fichier_net : in Unbounded_String) is
-      -- Instanciation matrice
-      package Matrice_vecteur is new Matrice(Capacite => nombre_site);
-      use Matrice_vecteur;
       
+      -- Instanciation des modules
+      
+         package vecteurs_float is new vecteurs(Capacite => nombre_site, T_Valeur => Float);
+         use vecteurs_float;
+
+         -- Renvoie True si le réel est nul
+         function est_nul(x : Float) return Boolean is
+         begin
+            return abs(x) < 0.000001;
+         end est_nul;
+
+         package Matrice_pleine is new vecteurs_float.Matrice_pleine(Capacite => nombre_site, zero => 0.0, est_nul =>est_nul);
+         use Matrice_pleine;
+
+         -- On instancie max et distance qui sont des fonctions génériques
+         function max is new vecteurs_float.max;
+         function distance is new vecteurs_float.distance;
+
       --Variables
          poubelle : Integer; -- Pour lire une ligne du fichier net dans le vide
          i : Integer; -- Indice pour parcourir des listes
@@ -93,14 +110,14 @@ package body page_rank_matrice_pleine is
          pik_prec := pik;
          pik := pik * G;
          i := i + 1;
-      exit when (i < nombre_site) or else ( norme(pik + ((-1.0) * pik_prec))> epsilon );
+      exit when (i > k) or else (distance(pik,pik_prec) < epsilon);
       end loop;
 
       -- Calculer le page rank
       Tri_pik := pik;
       Initialiser_vecteur(nombre_site,0.0,page_rank);
       for i in 1..nombre_site loop
-         indice := Ligne_max(Tri_pik);
+         indice := max(Tri_pik);
          page_rank.tab(i) := Float(indice) - 1.0;
          Tri_pik.tab(indice) := 0.0;
       end loop;

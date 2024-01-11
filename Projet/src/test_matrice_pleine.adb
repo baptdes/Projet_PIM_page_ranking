@@ -1,12 +1,20 @@
 with ada.Text_IO; use ada.Text_IO;
 with Ada.Assertions; use Ada.Assertions;
-with Ada.Numerics.Elementary_Functions; use  Ada.Numerics.Elementary_Functions;
-with Matrice;
+with vecteurs;
+with vecteurs.matrice_pleine;
 
-procedure test_matrice is
+procedure test_matrice_pleine is
     
-    package Matrice_vecteur is new Matrice(Capacite => 10);
-    use Matrice_vecteur;
+    function est_nul(x : Float) return Boolean is
+    begin
+        return abs(x) < 0.000001;
+    end est_nul;
+    
+    package vecteurs_float is new vecteurs(Capacite => 50, T_Valeur => Float);
+    use vecteurs_float;
+
+    package Matrice_pleine is new vecteurs_float.Matrice_pleine(Capacite => 50, zero => 0.0, est_nul =>est_nul);
+    use Matrice_pleine;
 
     procedure test_multiplication is
         M1 : T_mat;
@@ -61,16 +69,6 @@ procedure test_matrice is
         Assert(M3.Mat(2,2) = 8.0);
     end test_addition;
     
-    procedure test_norme is
-        V: T_vecteur;
-    begin
-        Initialiser_vecteur(2, 0.0, V);
-        
-        V.tab(1) := 1.0;
-        V.tab(2) := 3.0;
-        Assert(abs(norme(V) - sqrt(10.0)) < 0.000001);
-    end test_norme;
-    
     procedure test_modifier_ligne is
         M1: T_mat;
     begin
@@ -82,15 +80,6 @@ procedure test_matrice is
         Assert(M1.Mat(2,2) = 0.0);
     end test_modifier_ligne;
     
-    procedure test_ligne_max is
-        V: T_vecteur;
-    begin
-        Initialiser_vecteur(10, 0.0, V);
-        V.tab(1) := 2.0;
-        V.tab(4) := 3.0;
-        Assert(Ligne_max(V) = 4);
-    end test_ligne_max;
-    
 begin
     Put_Line("Début tests matrices pleines");
     Put_Line("--------------------------------------");
@@ -98,12 +87,8 @@ begin
     Put_Line("Test multiplacation matricielle OK");
     test_addition;
     Put_Line("Test addition matrices OK");
-    test_norme;
-    Put_Line("Test norme OK");
     test_modifier_ligne;
     Put_Line("Test modifier_ligne OK");
-    test_ligne_max;
-    Put_Line("Test ligne_max OK");
     Put_Line("--------------------------------------");
     Put_Line("Fin tests matrices pleines");
 end;

@@ -3,10 +3,10 @@ with Ada.Integer_Text_IO;   use Ada.Integer_Text_IO;
 
 package body TH is
 
-    function egale(Cle1 : T_Couple;Cle2 : T_Couple) return Boolean is
+    function "="(Left : T_Couple; Right : T_Couple) return Boolean is
     begin
-        return ((Cle1.Cle_1 = Cle2.Cle_1) and (Cle1.Cle_2 = Cle2.Cle_2));
-    end egale;
+        return ((Left.Cle_1 = Right.Cle_1) and (Left.Cle_2 = Right.Cle_2));
+    end "=";
 
     procedure Couplage(Couple: out T_Couple; Cle1 : in T_Cle ; Cle2 : in T_Cle) is
     begin
